@@ -355,7 +355,7 @@
 
     <script>
       let submitted = false;
-      let iframeLoadedOnce = false;
+      let submitFallbackTimer = null;
 
       function setSectionEnabled(sectionId, enabled) {
         const section = document.getElementById(sectionId);
@@ -446,17 +446,22 @@
         submitBtn.classList.add("opacity-70", "cursor-not-allowed");
 
         submitted = true;
+
+        // Google Forms 有時不會穩定觸發 hidden iframe onload，
+        // 加一個保底顯示，避免畫面停在「送出中...」。
+        clearTimeout(submitFallbackTimer);
+        submitFallbackTimer = setTimeout(() => {
+          if (submitted) {
+            showSuccess();
+          }
+        }, 2500);
+
         return true;
       }
 
       function handleIframeLoad() {
-        // hidden iframe 初始化時也會 onload，一開始不要顯示成功。
-        if (!iframeLoadedOnce) {
-          iframeLoadedOnce = true;
-          return;
-        }
-
         if (submitted) {
+          clearTimeout(submitFallbackTimer);
           showSuccess();
         }
       }
