@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>出席回函 | 昶毓 & 姿穎</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Noto+Serif+TC:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      :root {
+        --morandi-tan: #d4a373;
+        --soft-white: #fafaf8;
+      }
+      body {
+        font-family: "Noto Serif TC", serif;
+        background-color: var(--soft-white);
+        color: #4a4a4a;
+      }
+      .serif-en {
+        font-family: "Cormorant Garamond", serif;
+      }
+      .glass-nav {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(212, 163, 115, 0.1);
+      }
+      input,
+      select,
+      textarea {
+        appearance: none;
+        -webkit-appearance: none;
+        border-radius: 8px !important;
+        outline: none;
+      }
+      .hidden-section {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <nav
+      class="glass-nav fixed top-0 w-full z-50 px-6 py-4 flex justify-between items-center"
+    >
+      <div class="serif-en text-2xl font-medium tracking-widest text-[#d4a373]">
+        C & Z
+      </div>
+      <div class="flex space-x-6 text-sm tracking-widest font-medium">
+        <a href="../" class="text-slate-400 hover:text-[#d4a373] transition"
+          >電子喜帖</a
+        >
+        <a href="#" class="text-[#d4a373] border-b-2 border-[#d4a373]"
+          >出席回函</a
+        >
+      </div>
+    </nav>
+
+    <div class="pt-32 px-6 pb-20 min-h-[90vh]">
+      <div
+        class="max-w-xl mx-auto bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-gray-100 relative"
+      >
+        <div class="absolute top-0 left-0 w-full h-2 bg-[#d4a373]"></div>
+        <div class="text-center mb-10">
+          <h3 class="text-2xl font-medium mb-2 tracking-widest text-slate-800">
+            出席回函
+          </h3>
+          <p
+            class="serif-en text-sm text-[#8da399] italic uppercase tracking-widest"
+          >
+            RSVP Survey
+          </p>
+        </div>
+
+        <iframe
+          name="hidden_iframe"
+          style="display: none"
+          onload="
+            if (submitted) {
+              showSuccess();
+            }
+          "
+        ></iframe>
+        <form
+          action="https://docs.google.com/forms/d/e/1FAIpQLSem4ZcpMaJVH0NF3BLdRGkHF0g_7PPPGOYUKGmHcsTDLK1thg/formResponse"
+          method="post"
+          target="hidden_iframe"
+          onsubmit="return prepareSubmit();"
+        >
+          <div id="formContent" class="space-y-8">
+            <div>
+              <label
+                class="block text-xs font-bold mb-3 text-slate-400 uppercase tracking-widest"
+                >姓名 NAME *</label
+              >
+              <input
+                type="text"
+                name="entry.162623246"
+                required
+                class="w-full px-5 py-4 bg-[#f9f9f7] border-none"
+              />
+            </div>
+
+            <div>
+              <label
+                class="block text-xs font-bold mb-3 text-slate-400 uppercase tracking-widest"
+                >關係 RELATION *</label
+              >
+              <select
+                id="rel"
+                name="entry.1835028889"
+                required
+                class="w-full px-5 py-4 bg-[#f9f9f7] border-none"
+              >
+                <option value="" disabled selected>請選擇...</option>
+                <option value="男方親友">男方親友</option>
+                <option value="女方親友">女方親友</option>
+              </select>
+            </div>
+
+            <div>
+              <label
+                class="block text-xs font-bold mb-3 text-slate-400 uppercase tracking-widest"
+                >認識緣分 HOW WE MET *</label
+              >
+              <input
+                type="text"
+                id="met"
+                required
+                class="w-full px-5 py-4 bg-[#f9f9f7] border-none"
+                placeholder="例：大學同學"
+              />
+              <input type="hidden" id="gMet" name="entry.2109635832" /><input
+                type="hidden"
+                id="bMet"
+                name="entry.754579317"
+              />
+            </div>
+
+            <div>
+              <label
+                class="block text-xs font-bold mb-3 text-slate-400 uppercase tracking-widest"
+                >是否能來見證幸福 ATTENDANCE *</label
+              >
+              <select
+                id="att"
+                required
+                onchange="handleLogic()"
+                class="w-full px-5 py-4 bg-[#f9f9f7] border-none"
+              >
+                <option value="" disabled selected>請選擇...</option>
+                <option value="肚子準備好了！一定準時報到吃喜酒 🍽️">
+                  肚子準備好了！一定準時報到吃喜酒 🍽️
+                </option>
+                <option value="嗚嗚，這天剛好不行，祝你們婚禮順利圓滿 😭">
+                  嗚嗚，這天剛好不行，祝你們婚禮順利圓滿 😭
+                </option>
+              </select>
+              <input type="hidden" id="gAtt" name="entry.839371500" /><input
+                type="hidden"
+                id="bAtt"
+                name="entry.1594906775"
+              />
+            </div>
+
+            <div
+              id="attendBox"
+              class="hidden-section space-y-8 bg-[#fdfdfb] p-6 rounded-2xl border border-gray-50"
+            >
+              <div>
+                <label class="block text-xs font-bold mb-2 text-[#d4a373]"
+                  >攜伴參加 COMPANIONS *</label
+                >
+                <select
+                  id="comp"
+                  name="entry.1719850992"
+                  onchange="handleLogic()"
+                  class="w-full px-4 py-3 bg-white border border-gray-100"
+                >
+                  <option value="只有我一個人出席喔！🙌">
+                    只有我一個人出席喔！🙌
+                  </option>
+                  <option value="我要攜伴！">我要攜伴！</option>
+                </select>
+              </div>
+              <div id="compDetail" class="hidden-section">
+                <label
+                  class="block text-xs font-bold mb-2 text-slate-400 uppercase tracking-widest"
+                  >人數與兒童椅備註</label
+                >
+                <input
+                  type="text"
+                  name="entry.957124862"
+                  class="w-full px-4 py-3 bg-white border border-gray-100"
+                  placeholder="例：2位大人，1張兒童椅"
+                />
+              </div>
+              <div>
+                <label class="block text-xs font-bold mb-2 text-[#d4a373]"
+                  >飲食需求 DIETARY *</label
+                >
+                <select
+                  name="entry.66149520"
+                  class="w-full px-4 py-3 bg-white border border-gray-100"
+                >
+                  <option value="我要享用一般葷食">我要享用一般葷食</option>
+                  <option value="我需要準備素食餐點">我需要準備素食餐點</option>
+                </select>
+              </div>
+            </div>
+
+            <div id="absentBox" class="hidden-section">
+              <label
+                class="block text-xs font-bold mb-3 text-slate-400 uppercase tracking-widest"
+                >喜悅傳遞方式 OPTIONS *</label
+              >
+              <select
+                name="entry.1673142063"
+                class="w-full px-5 py-4 bg-[#f9f9f7] border-none"
+              >
+                <option value="給我電子喜帖就好，我的祝福一樣滿滿的📱">
+                  給我電子喜帖就好
+                </option>
+                <option value="請寄實體喜帖給我沾沾喜氣 📮">
+                  請寄實體喜帖給我沾沾喜氣
+                </option>
+              </select>
+            </div>
+
+            <div>
+              <label
+                class="block text-xs font-bold mb-3 text-slate-400 uppercase tracking-widest"
+                >祝福語 MESSAGE</label
+              >
+              <textarea
+                name="entry.994223227"
+                rows="3"
+                class="w-full px-5 py-4 bg-[#f9f9f7] border-none"
+              ></textarea>
+            </div>
+
+            <button
+              type="submit"
+              class="w-full bg-[#d4a373] text-white py-5 rounded-2xl font-bold tracking-[0.3em] hover:shadow-lg transition"
+            >
+              確認送出 SUBMIT
+            </button>
+          </div>
+
+          <div id="successMsg" class="hidden-section text-center py-10">
+            <span class="text-5xl block mb-6">✨</span>
+            <h4 class="text-xl font-medium mb-4 text-slate-800 tracking-widest">
+              回傳成功！
+            </h4>
+            <p class="text-slate-500 text-sm leading-relaxed mb-10">
+              期待與您共享喜悅。
+            </p>
+            <a
+              href="../"
+              class="text-[#d4a373] text-xs underline tracking-widest"
+              >回到電子喜帖首頁</a
+            >
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      function handleLogic() {
+        const a = document.getElementById("att").value,
+          c = document.getElementById("comp").value;
+        document.getElementById("attendBox").style.display = a.includes(
+          "肚子準備好了",
+        )
+          ? "block"
+          : "none";
+        document.getElementById("absentBox").style.display = a.includes("嗚嗚")
+          ? "block"
+          : "none";
+        document.getElementById("compDetail").style.display =
+          a.includes("肚子準備好了") && c === "我要攜伴！" ? "block" : "none";
+      }
+      let submitted = false;
+      function prepareSubmit() {
+        const r = document.getElementById("rel").value,
+          m = document.getElementById("met").value,
+          a = document.getElementById("att").value;
+        if (r === "男方親友") {
+          document.getElementById("gMet").value = m;
+          document.getElementById("gAtt").value = a;
+        } else {
+          document.getElementById("bMet").value = m;
+          document.getElementById("bAtt").value = a;
+        }
+        submitted = true;
+        return true;
+      }
+      function showSuccess() {
+        document.getElementById("formContent").style.display = "none";
+        document.getElementById("successMsg").style.display = "block";
+        window.scrollTo(0, 0);
+      }
+    </script>
+  </body>
+</html>
