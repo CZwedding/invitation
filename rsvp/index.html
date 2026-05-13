@@ -109,13 +109,13 @@
         ></iframe>
 
         <!--
-          正式版：target="_blank"
+          正式版：target="hidden_iframe"
           若需除錯，可暫時改成 target="_blank"，送出後會開啟 Google 表單檢查頁。
         -->
         <form
           action="https://docs.google.com/forms/d/e/1FAIpQLSeXJvhL855NqkjFCsHgeZ5HAyDJXfBw3nwKEOLVuz1dj2XGoA/formResponse"
           method="post"
-          target="_blank"
+          target="hidden_iframe"
           id="weddingForm"
           onsubmit="return prepareSubmit();"
         >
@@ -151,7 +151,7 @@
               >
                 <option value="" disabled selected>請選擇您的關係...</option>
                 <option value="男方親友">男方親友</option>
-                <option value="女方朋友">女方朋友</option>
+                <option value="女方親友">女方親友</option>
               </select>
             </div>
 
@@ -397,12 +397,18 @@
 
         const submitBtn = document.getElementById("submitBtn");
         submitBtn.disabled = true;
-        submitBtn.textContent = "已開啟 Google 表單檢查頁";
+        submitBtn.textContent = "送出中...";
         submitBtn.classList.add("opacity-70", "cursor-not-allowed");
 
         submitted = true;
 
-        // 除錯版不自動顯示成功，直接看 Google 表單檢查頁。
+        clearTimeout(submitFallbackTimer);
+        submitFallbackTimer = setTimeout(() => {
+          if (submitted) {
+            showSuccess();
+          }
+        }, 2500);
+
         return true;
       }
 
