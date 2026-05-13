@@ -69,33 +69,23 @@
 
         <div class="text-center mb-10 mt-2">
           <h3 class="text-2xl font-medium mb-2 tracking-widest text-slate-800">
-            出席回函
+            出席回函 (測試模式)
           </h3>
           <p
-            class="serif-en text-sm text-[#8da399] italic uppercase tracking-widest"
+            class="serif-en text-sm text-red-400 italic uppercase tracking-widest"
           >
-            RSVP Survey
+            Debug Mode
           </p>
         </div>
-
-        <iframe
-          name="hidden_iframe"
-          id="hidden_iframe"
-          style="display: none"
-          onload="
-            if (submitted) {
-              showSuccess();
-            }
-          "
-        ></iframe>
 
         <form
           action="https://docs.google.com/forms/d/e/1FAIpQLSem4ZcpMaJVH0NF3BLdRGkHF0g_7PPPGOYUKGmHcsTDLK1thg/formResponse"
           method="post"
-          target="hidden_iframe"
           id="weddingForm"
           onsubmit="return prepareSubmit();"
         >
+          <input type="hidden" name="pageHistory" value="0,1,2,3,4,5,6" />
+
           <div id="formContent" class="space-y-8">
             <div>
               <label
@@ -252,25 +242,10 @@
 
             <button
               type="submit"
-              class="w-full bg-[#d4a373] text-white py-5 rounded-2xl font-bold tracking-[0.3em] hover:shadow-xl transition-all active:scale-95 shadow-md"
+              class="w-full bg-[#d4a373] text-white py-5 rounded-2xl font-bold tracking-[0.3em] hover:shadow-xl transition-all shadow-md"
             >
-              確認送出 SUBMIT
+              進行除錯測試！
             </button>
-          </div>
-
-          <div id="successMsg" class="hidden-section text-center py-10">
-            <span class="text-5xl block mb-6">✨</span>
-            <h4 class="text-xl font-medium mb-4 text-slate-800 tracking-widest">
-              回傳成功！
-            </h4>
-            <p class="text-slate-500 text-sm leading-relaxed mb-10">
-              昶毓 & 姿穎 已收到您的回覆。<br />期待與您分享喜悅！
-            </p>
-            <a
-              href="../"
-              class="text-[#d4a373] text-xs underline tracking-widest"
-              >回到電子喜帖首頁</a
-            >
           </div>
         </form>
       </div>
@@ -297,19 +272,18 @@
             : "none";
       }
 
-      let submitted = false;
       function prepareSubmit() {
         const rel = document.getElementById("real_rel").value;
         const metValue = document.getElementById("v_met").value;
         const attValue = document.getElementById("v_att").value;
 
-        // 重要：先清空所有分流欄位，避免重複
+        // 確保先清空所有隱藏欄位
         document.getElementById("entry_gMet").value = "";
         document.getElementById("entry_bMet").value = "";
         document.getElementById("entry_gAtt").value = "";
         document.getElementById("entry_bAtt").value = "";
 
-        // 根據選取的關係，將數值填入對應的 Google 欄位
+        // 根據關係賦予數值
         if (rel === "男方親友") {
           document.getElementById("entry_gMet").value = metValue;
           document.getElementById("entry_gAtt").value = attValue;
@@ -318,14 +292,7 @@
           document.getElementById("entry_bAtt").value = attValue;
         }
 
-        submitted = true;
         return true;
-      }
-
-      function showSuccess() {
-        document.getElementById("formContent").style.display = "none";
-        document.getElementById("successMsg").style.display = "block";
-        window.scrollTo({ top: 0, behavior: "smooth" });
       }
     </script>
   </body>
