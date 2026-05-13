@@ -14,19 +14,23 @@
         --morandi-tan: #d4a373;
         --soft-white: #fafaf8;
       }
+
       body {
         font-family: "Noto Serif TC", serif;
         background-color: var(--soft-white);
         color: #4a4a4a;
       }
+
       .serif-en {
         font-family: "Cormorant Garamond", serif;
       }
+
       .glass-nav {
         background: rgba(255, 255, 255, 0.8);
         backdrop-filter: blur(10px);
         border-bottom: 1px solid rgba(212, 163, 115, 0.1);
       }
+
       input,
       select,
       textarea {
@@ -34,22 +38,27 @@
         outline: none;
         transition: all 0.3s;
       }
+
       input:focus,
       select:focus,
       textarea:focus {
         box-shadow: 0 0 0 1px var(--morandi-tan);
       }
+
       .hidden-section {
         display: none;
       }
+
       .fade-in {
         animation: fadeIn 0.4s ease-out;
       }
+
       @keyframes fadeIn {
         from {
           opacity: 0;
           transform: translateY(5px);
         }
+
         to {
           opacity: 1;
           transform: translateY(0);
@@ -57,6 +66,7 @@
       }
     </style>
   </head>
+
   <body>
     <nav
       class="glass-nav fixed top-0 w-full z-50 px-6 py-4 flex justify-between items-center"
@@ -65,18 +75,18 @@
         C & Z
       </div>
       <div class="flex space-x-6 text-sm tracking-widest font-medium">
-        <a href="../" class="text-slate-400 hover:text-[#d4a373] transition"
-          >電子喜帖</a
-        >
-        <a href="#" class="text-[#d4a373] border-b-2 border-[#d4a373]"
-          >出席回函</a
-        >
+        <a href="../" class="text-slate-400 hover:text-[#d4a373] transition">
+          電子喜帖
+        </a>
+        <a href="#" class="text-[#d4a373] border-b-2 border-[#d4a373]">
+          出席回函
+        </a>
       </div>
     </nav>
 
     <div class="pt-32 px-6 pb-20 min-h-[90vh]">
       <div
-        class="max-w-xl mx-auto bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-gray-100 relative"
+        class="max-w-xl mx-auto bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-gray-100 relative overflow-hidden"
       >
         <div class="absolute top-0 left-0 w-full h-2 bg-[#d4a373]"></div>
 
@@ -95,13 +105,14 @@
           name="hidden_iframe"
           id="hidden_iframe"
           style="display: none"
-          onload="
-            if (submitted) {
-              showSuccess();
-            }
-          "
+          onload="handleIframeLoad()"
         ></iframe>
 
+        <!--
+          正式版：target="hidden_iframe"
+          測試時可暫時改成 target="_blank"，送出後會打開 Google 表單回應頁，
+          若 Google 表單有必填欄位缺漏或選項值不符，會直接看到錯誤。
+        -->
         <form
           action="https://docs.google.com/forms/d/e/1FAIpQLSem4ZcpMaJVH0NF3BLdRGkHF0g_7PPPGOYUKGmHcsTDLK1thg/formResponse"
           method="post"
@@ -115,8 +126,9 @@
             <div>
               <label
                 class="block text-xs font-bold mb-3 text-slate-400 uppercase tracking-widest"
-                >姓名 NAME *</label
               >
+                姓名 NAME *
+              </label>
               <input
                 type="text"
                 name="entry.162623246"
@@ -129,8 +141,9 @@
             <div>
               <label
                 class="block text-xs font-bold mb-3 text-slate-400 uppercase tracking-widest"
-                >與新人的關係 RELATION *</label
               >
+                與新人的關係 RELATION *
+              </label>
               <select
                 id="relSelect"
                 name="entry.1835028889"
@@ -146,8 +159,9 @@
             <div>
               <label
                 class="block text-xs font-bold mb-3 text-slate-400 uppercase tracking-widest"
-                >認識緣分 HOW WE MET *</label
               >
+                認識緣分 HOW WE MET *
+              </label>
               <input
                 type="text"
                 id="vMet"
@@ -155,6 +169,8 @@
                 class="w-full px-5 py-4 bg-[#f9f9f7] border-none shadow-sm"
                 placeholder="例：大學同學"
               />
+
+              <!-- 男方 / 女方分流用欄位 -->
               <input type="hidden" id="entryGMet" name="entry.2109635832" />
               <input type="hidden" id="entryBMet" name="entry.754579317" />
             </div>
@@ -162,8 +178,9 @@
             <div>
               <label
                 class="block text-xs font-bold mb-3 text-slate-400 uppercase tracking-widest"
-                >是否能來見證幸福 ATTENDANCE *</label
               >
+                是否能來見證幸福 ATTENDANCE *
+              </label>
               <select
                 id="vAtt"
                 required
@@ -178,6 +195,8 @@
                   嗚嗚，這天剛好不行，祝你們婚禮順利圓滿 😭
                 </option>
               </select>
+
+              <!-- 男方 / 女方分流用欄位 -->
               <input type="hidden" id="entryGAtt" name="entry.839371500" />
               <input type="hidden" id="entryBAtt" name="entry.1594906775" />
             </div>
@@ -187,9 +206,9 @@
               class="hidden-section space-y-8 bg-[#fdfdfb] p-6 rounded-2xl border border-gray-50 shadow-inner fade-in"
             >
               <div>
-                <label class="block text-xs font-bold mb-2 text-[#d4a373]"
-                  >攜伴參加 COMPANIONS *</label
-                >
+                <label class="block text-xs font-bold mb-2 text-[#d4a373]">
+                  攜伴參加 COMPANIONS *
+                </label>
                 <select
                   id="vComp"
                   name="entry.1719850992"
@@ -208,33 +227,39 @@
                   <div>
                     <label
                       class="block text-[10px] font-bold mb-1 text-slate-400 uppercase"
-                      >大人人數</label
                     >
+                      大人人數
+                    </label>
                     <input
                       type="number"
                       name="entry.957124862"
                       class="w-full px-4 py-2 bg-white border border-gray-100"
                       placeholder="含自己"
+                      min="1"
                     />
                   </div>
                   <div>
                     <label
                       class="block text-[10px] font-bold mb-1 text-slate-400 uppercase"
-                      >小孩人數</label
                     >
+                      小孩人數
+                    </label>
                     <input
                       type="number"
                       name="entry.1200218196"
                       class="w-full px-4 py-2 bg-white border border-gray-100"
                       placeholder="不佔位免填"
+                      min="0"
                     />
                   </div>
                 </div>
+
                 <div>
                   <label
                     class="block text-[10px] font-bold mb-1 text-slate-400 uppercase"
-                    >兒童椅/嬰兒車備註</label
                   >
+                    兒童椅/嬰兒車備註
+                  </label>
                   <input
                     type="text"
                     name="entry.1364757732"
@@ -245,9 +270,9 @@
               </div>
 
               <div>
-                <label class="block text-xs font-bold mb-2 text-[#d4a373]"
-                  >飲食需求 DIETARY *</label
-                >
+                <label class="block text-xs font-bold mb-2 text-[#d4a373]">
+                  飲食需求 DIETARY *
+                </label>
                 <select
                   name="entry.66149520"
                   class="w-full px-4 py-3 bg-white border border-gray-100"
@@ -261,9 +286,11 @@
             <div id="absentBox" class="hidden-section fade-in">
               <label
                 class="block text-xs font-bold mb-3 text-slate-400 uppercase tracking-widest"
-                >喜悅傳遞方式 OPTIONS *</label
               >
+                喜悅傳遞方式 OPTIONS *
+              </label>
               <select
+                id="vAbsentOption"
                 name="entry.1673142063"
                 class="w-full px-5 py-4 bg-[#f9f9f7] border-none shadow-sm"
               >
@@ -290,8 +317,9 @@
             <div>
               <label
                 class="block text-xs font-bold mb-3 text-slate-400 uppercase tracking-widest"
-                >給我們的祝福 MESSAGE</label
               >
+                給我們的祝福 MESSAGE
+              </label>
               <textarea
                 name="entry.994223227"
                 rows="3"
@@ -301,6 +329,7 @@
             </div>
 
             <button
+              id="submitBtn"
               type="submit"
               class="w-full bg-[#d4a373] text-white py-5 rounded-2xl font-bold tracking-[0.3em] hover:shadow-xl transition-all shadow-md active:scale-95"
             >
@@ -316,58 +345,120 @@
             <p class="text-slate-500 text-sm leading-relaxed mb-10">
               昶毓 & 姿穎 已收到您的祝福。<br />期待與您分享喜悅！
             </p>
-            <a
-              href="../"
-              class="text-[#d4a373] text-xs underline tracking-widest"
-              >回到電子喜帖首頁</a
-            >
+            <a href="../" class="text-[#d4a373] text-xs underline tracking-widest">
+              回到電子喜帖首頁
+            </a>
           </div>
         </form>
       </div>
     </div>
 
     <script>
+      let submitted = false;
+      let iframeLoadedOnce = false;
+
+      function setSectionEnabled(sectionId, enabled) {
+        const section = document.getElementById(sectionId);
+        if (!section) return;
+
+        const fields = section.querySelectorAll("input, select, textarea");
+        fields.forEach((field) => {
+          field.disabled = !enabled;
+        });
+      }
+
+      function setRequiredWhenEnabled(sectionId, selector, required) {
+        const section = document.getElementById(sectionId);
+        if (!section) return;
+
+        const field = section.querySelector(selector);
+        if (field) {
+          field.required = required;
+        }
+      }
+
       function handleLogic() {
         const att = document.getElementById("vAtt").value;
         const comp = document.getElementById("vComp").value;
 
-        document.getElementById("attendBox").style.display = att.includes(
-          "肚子準備好了",
-        )
-          ? "block"
-          : "none";
-        document.getElementById("absentBox").style.display = att.includes(
-          "嗚嗚",
-        )
-          ? "block"
-          : "none";
+        const isAttend = att.includes("肚子準備好了");
+        const isAbsent = att.includes("嗚嗚");
+        const hasCompanion = comp === "我要攜伴！";
+
+        document.getElementById("attendBox").style.display = isAttend ? "block" : "none";
+        document.getElementById("absentBox").style.display = isAbsent ? "block" : "none";
         document.getElementById("compDetail").style.display =
-          att.includes("肚子準備好了") && comp === "我要攜伴！"
-            ? "block"
-            : "none";
+          isAttend && hasCompanion ? "block" : "none";
+
+        setSectionEnabled("attendBox", isAttend);
+        setSectionEnabled("absentBox", isAbsent);
+
+        const compDetailFields = document
+          .getElementById("compDetail")
+          .querySelectorAll("input, select, textarea");
+
+        compDetailFields.forEach((field) => {
+          field.disabled = !(isAttend && hasCompanion);
+        });
+
+        // 前端必填控制：只在該區塊顯示時才必填
+        setRequiredWhenEnabled("attendBox", "#vComp", isAttend);
+        setRequiredWhenEnabled("absentBox", "#vAbsentOption", isAbsent);
+
+        // 攜伴時建議大人人數必填；未攜伴則不送出
+        const adultCount = document.querySelector('input[name="entry.957124862"]');
+        if (adultCount) {
+          adultCount.required = isAttend && hasCompanion;
+        }
       }
 
-      let submitted = false;
       function prepareSubmit() {
         const rel = document.getElementById("relSelect").value;
-        const met = document.getElementById("vMet").value;
+        const met = document.getElementById("vMet").value.trim();
         const att = document.getElementById("vAtt").value;
 
-        // 派發資料到正確的 Google 欄位
+        if (!rel || !met || !att) {
+          return false;
+        }
+
+        // 先清空所有分流欄位，避免殘值
+        document.getElementById("entryGMet").value = "";
+        document.getElementById("entryGAtt").value = "";
+        document.getElementById("entryBMet").value = "";
+        document.getElementById("entryBAtt").value = "";
+
+        // 派發資料到正確的 Google 表單欄位
         if (rel === "男方親友") {
           document.getElementById("entryGMet").value = met;
           document.getElementById("entryGAtt").value = att;
-          document.getElementById("entryBMet").value = "";
-          document.getElementById("entryBAtt").value = "";
-        } else {
+        }
+
+        if (rel === "女方親友") {
           document.getElementById("entryBMet").value = met;
           document.getElementById("entryBAtt").value = att;
-          document.getElementById("entryGMet").value = "";
-          document.getElementById("entryGAtt").value = "";
         }
+
+        handleLogic();
+
+        const submitBtn = document.getElementById("submitBtn");
+        submitBtn.disabled = true;
+        submitBtn.textContent = "送出中...";
+        submitBtn.classList.add("opacity-70", "cursor-not-allowed");
 
         submitted = true;
         return true;
+      }
+
+      function handleIframeLoad() {
+        // hidden iframe 初始化時也會 onload，一開始不要顯示成功。
+        if (!iframeLoadedOnce) {
+          iframeLoadedOnce = true;
+          return;
+        }
+
+        if (submitted) {
+          showSuccess();
+        }
       }
 
       function showSuccess() {
@@ -375,6 +466,12 @@
         document.getElementById("successMsg").style.display = "block";
         window.scrollTo({ top: 0, behavior: "smooth" });
       }
+
+      window.addEventListener("DOMContentLoaded", () => {
+        setSectionEnabled("attendBox", false);
+        setSectionEnabled("absentBox", false);
+        handleLogic();
+      });
     </script>
   </body>
 </html>
