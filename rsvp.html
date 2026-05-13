@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>出席回函 | 昶毓 & 姿穎 婚禮邀請</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Noto+Serif+TC:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+      :root {
+        --morandi-tan: #d4a373;
+        --soft-white: #fafaf8;
+      }
+      body {
+        font-family: "Noto Serif TC", serif;
+        background-color: var(--soft-white);
+        color: #4a4a4a;
+      }
+      .serif-en {
+        font-family: "Cormorant Garamond", serif;
+      }
+      .glass-nav {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(212, 163, 115, 0.1);
+      }
+      input,
+      select,
+      textarea {
+        appearance: none;
+        -webkit-appearance: none;
+        border-radius: 8px !important;
+        outline: none;
+      }
+      input:focus,
+      select:focus,
+      textarea:focus {
+        box-shadow: 0 0 0 1px var(--morandi-tan);
+      }
+    </style>
+  </head>
+  <body>
+    <nav
+      class="glass-nav fixed top-0 w-full z-50 px-6 py-4 flex justify-between items-center"
+    >
+      <div class="serif-en text-2xl font-medium tracking-widest text-[#d4a373]">
+        C & Z
+      </div>
+      <div class="flex space-x-6 text-sm tracking-widest font-medium">
+        <a
+          href="index.html"
+          class="text-slate-400 hover:text-[#d4a373] transition"
+          >電子喜帖</a
+        >
+        <a href="#" class="text-[#d4a373] border-b-2 border-[#d4a373]"
+          >出席回函</a
+        >
+      </div>
+    </nav>
+
+    <div class="pt-32 px-6 pb-20 min-h-[90vh]">
+      <div
+        class="max-w-xl mx-auto bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-gray-100 relative overflow-hidden"
+      >
+        <div class="absolute top-0 left-0 w-full h-2 bg-[#d4a373]"></div>
+
+        <div class="text-center mb-10 mt-2">
+          <h3 class="text-2xl font-medium mb-2 tracking-widest text-slate-800">
+            出席回函
+          </h3>
+          <p class="serif-en text-sm text-[#8da399] italic">RSVP Survey</p>
+        </div>
+
+        <iframe
+          name="hidden_iframe"
+          id="hidden_iframe"
+          style="display: none"
+          onload="
+            if (submitted) {
+              showSuccess();
+            }
+          "
+        ></iframe>
+
+        <form
+          action="https://docs.google.com/forms/d/e/1FAIpQLSem4ZcpMaJVH0NF3BLdRGkHF0g_7PPPGOYUKGmHcsTDLK1thg/formResponse"
+          method="post"
+          target="hidden_iframe"
+          id="weddingForm"
+          onsubmit="return prepareSubmit();"
+        >
+          <div class="space-y-8" id="formItems">
+            <div>
+              <label
+                class="block text-xs tracking-widest font-medium mb-3 text-slate-400 uppercase"
+                >姓名 NAME *</label
+              >
+              <input
+                type="text"
+                name="entry.162623246"
+                required
+                class="w-full px-5 py-4 bg-[#f9f9f7] border-none focus:ring-1 focus:ring-[#d4a373] transition"
+              />
+            </div>
+
+            <div>
+              <label
+                class="block text-xs tracking-widest font-medium mb-3 text-slate-400 uppercase"
+                >與新人的關係 RELATION *</label
+              >
+              <select
+                id="relationSelect"
+                name="entry.1835028889"
+                required
+                class="w-full px-5 py-4 bg-[#f9f9f7] border-none focus:ring-1 focus:ring-[#d4a373]"
+              >
+                <option value="" disabled selected>請選擇...</option>
+                <option value="男方親友">男方親友</option>
+                <option value="女方親友">女方親友</option>
+              </select>
+            </div>
+
+            <div>
+              <label
+                class="block text-xs tracking-widest font-medium mb-3 text-slate-400 uppercase"
+                >認識緣分 HOW WE MET *</label
+              >
+              <input
+                type="text"
+                id="visualHowMet"
+                required
+                class="w-full px-5 py-4 bg-[#f9f9f7] border-none focus:ring-1 focus:ring-[#d4a373]"
+                placeholder="例：大學同學"
+              />
+              <input type="hidden" id="groomHowMet" name="entry.2109635832" />
+              <input type="hidden" id="brideHowMet" name="entry.754579317" />
+            </div>
+
+            <div>
+              <label
+                class="block text-xs tracking-widest font-medium mb-3 text-slate-400 uppercase"
+                >是否能來見證幸福 ATTENDANCE *</label
+              >
+              <select
+                id="visualAttendance"
+                required
+                onchange="handleFormLogic()"
+                class="w-full px-5 py-4 bg-[#f9f9f7] border-none focus:ring-1 focus:ring-[#d4a373]"
+              >
+                <option value="" disabled selected>請選擇...</option>
+                <option value="肚子準備好了！一定準時報到吃喜酒 🍽️">
+                  肚子準備好了！一定準時報到吃喜酒 🍽️
+                </option>
+                <option value="嗚嗚，這天剛好不行，祝你們婚禮順利圓滿 😭">
+                  嗚嗚，這天剛好不行，祝你們婚禮順利圓滿 😭
+                </option>
+              </select>
+              <input type="hidden" id="groomAtt" name="entry.839371500" />
+              <input type="hidden" id="brideAtt" name="entry.1594906775" />
+            </div>
+
+            <div
+              id="attendBox"
+              style="display: none"
+              class="space-y-8 bg-[#fdfdfb] p-6 rounded-2xl border border-gray-50"
+            >
+              <div>
+                <label
+                  class="block text-xs tracking-widest font-medium mb-2 text-[#d4a373]"
+                  >攜伴參加 COMPANIONS *</label
+                >
+                <select
+                  id="compSelect"
+                  name="entry.1719850992"
+                  onchange="handleFormLogic()"
+                  class="w-full px-4 py-3 bg-white border border-gray-100"
+                >
+                  <option value="只有我一個人出席喔！🙌">
+                    只有我一個人出席喔！🙌
+                  </option>
+                  <option value="我要攜伴！">我要攜伴！</option>
+                </select>
+              </div>
+              <div id="compDetail" style="display: none">
+                <label
+                  class="block text-xs tracking-widest font-medium mb-2 text-slate-400"
+                  >人數及兒童椅備註</label
+                >
+                <input
+                  type="text"
+                  id="guestInput"
+                  name="entry.957124862"
+                  class="w-full px-4 py-3 bg-white border border-gray-100"
+                  placeholder="例：2位大人，1張兒童椅"
+                />
+              </div>
+              <div>
+                <label
+                  class="block text-xs tracking-widest font-medium mb-2 text-[#d4a373]"
+                  >飲食需求 DIETARY *</label
+                >
+                <select
+                  id="dietSelect"
+                  name="entry.66149520"
+                  class="w-full px-4 py-3 bg-white border border-gray-100"
+                >
+                  <option value="我要享用一般葷食">我要享用一般葷食</option>
+                  <option value="我需要準備素食餐點">我需要準備素食餐點</option>
+                </select>
+              </div>
+            </div>
+
+            <div id="absentBox" style="display: none">
+              <label
+                class="block text-xs tracking-widest font-medium mb-3 text-slate-400 uppercase"
+                >喜悅傳遞方式 OPTIONS *</label
+              >
+              <select
+                id="notAttendingSelect"
+                name="entry.1673142063"
+                class="w-full px-5 py-4 bg-[#f9f9f7] border-none"
+              >
+                <option value="給我電子喜帖就好，我的祝福一樣滿滿的📱">
+                  給我電子喜帖就好，我的祝福一樣滿滿的📱
+                </option>
+                <option value="請寄實體喜帖給我沾沾喜氣 📮">
+                  請寄實體喜帖給我沾沾喜氣 📮
+                </option>
+                <option
+                  value="人不到但心意要到！請提供匯款帳號/收件地址讓我送上祝福 🎁"
+                >
+                  人不到但心意要到！請提供匯款帳號
+                </option>
+                <option
+                  value="這次先不用麻煩啦，等你們忙完我們再私下約吃飯！ 🥂"
+                >
+                  等你們忙完我們再私下約吃飯！ 🥂
+                </option>
+              </select>
+            </div>
+
+            <div>
+              <label
+                class="block text-xs tracking-widest font-medium mb-3 text-slate-400 uppercase"
+                >給我們的祝福 MESSAGE</label
+              >
+              <textarea
+                name="entry.994223227"
+                rows="3"
+                class="w-full px-5 py-4 bg-[#f9f9f7] border-none transition"
+                placeholder="留下您的祝福..."
+              ></textarea>
+            </div>
+
+            <button
+              type="submit"
+              class="w-full bg-[#d4a373] text-white py-5 rounded-2xl font-medium tracking-[0.3em] hover:shadow-lg transition"
+            >
+              確認送出 SUBMIT
+            </button>
+          </div>
+
+          <div id="successMsg" style="display: none" class="text-center py-10">
+            <span class="text-5xl block mb-6">✨</span>
+            <h4 class="text-xl font-medium mb-4">送出成功！</h4>
+            <p class="text-slate-500 text-sm leading-relaxed mb-6">
+              我們收到您的祝福與回覆囉，<br />期待在這特別的日子與您分享喜悅！
+            </p>
+            <a
+              href="index.html"
+              class="text-[#d4a373] text-sm tracking-widest underline underline-offset-4"
+              >回到電子喜帖首頁</a
+            >
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <footer
+      class="py-12 text-center text-xs text-slate-300 tracking-[0.4em] uppercase"
+    >
+      Designed for Chang Yu & Zi Ying | 2026.07.16
+    </footer>
+
+    <script>
+      function handleFormLogic() {
+        const att = document.getElementById("visualAttendance").value;
+        const comp = document.getElementById("compSelect").value;
+
+        const attendBox = document.getElementById("attendBox");
+        const absentBox = document.getElementById("absentBox");
+        const compDetail = document.getElementById("compDetail");
+
+        // 欄位 DOM
+        const compSelect = document.getElementById("compSelect");
+        const guestInput = document.getElementById("guestInput");
+        const dietSelect = document.getElementById("dietSelect");
+        const notAttendingSelect =
+          document.getElementById("notAttendingSelect");
+
+        if (att.includes("肚子準備好了")) {
+          attendBox.style.display = "block";
+          absentBox.style.display = "none";
+
+          compSelect.disabled = false;
+          dietSelect.disabled = false;
+          notAttendingSelect.disabled = true;
+
+          if (comp === "我要攜伴！") {
+            compDetail.style.display = "block";
+            guestInput.disabled = false;
+          } else {
+            compDetail.style.display = "none";
+            guestInput.disabled = true;
+          }
+        } else if (att.includes("嗚嗚")) {
+          attendBox.style.display = "none";
+          absentBox.style.display = "block";
+
+          compSelect.disabled = true;
+          dietSelect.disabled = true;
+          guestInput.disabled = true;
+          notAttendingSelect.disabled = false;
+        } else {
+          attendBox.style.display = "none";
+          absentBox.style.display = "none";
+        }
+      }
+
+      let submitted = false;
+      function prepareSubmit() {
+        const rel = document.getElementById("relationSelect").value;
+        const met = document.getElementById("visualHowMet").value;
+        const att = document.getElementById("visualAttendance").value;
+
+        document.getElementById("groomHowMet").disabled = true;
+        document.getElementById("brideHowMet").disabled = true;
+        document.getElementById("groomAtt").disabled = true;
+        document.getElementById("brideAtt").disabled = true;
+
+        if (rel === "男方親友") {
+          const gHow = document.getElementById("groomHowMet");
+          gHow.disabled = false;
+          gHow.value = met;
+          const gAtt = document.getElementById("groomAtt");
+          gAtt.disabled = false;
+          gAtt.value = att;
+        } else if (rel === "女方親友") {
+          const bHow = document.getElementById("brideHowMet");
+          bHow.disabled = false;
+          bHow.value = met;
+          const bAtt = document.getElementById("brideAtt");
+          bAtt.disabled = false;
+          bAtt.value = att;
+        }
+        submitted = true;
+        return true;
+      }
+
+      function showSuccess() {
+        document.getElementById("formItems").style.display = "none";
+        document.getElementById("successMsg").style.display = "block";
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>昶毓 & 姿穎 | 柒天柒年 婚禮邀請</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Noto+Serif+TC:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+      :root {
+        --morandi-tan: #d4a373;
+        --soft-white: #fafaf8;
+      }
+      body {
+        font-family: "Noto Serif TC", serif;
+        background-color: var(--soft-white);
+        color: #4a4a4a;
+        scroll-behavior: smooth;
+      }
+      .serif-en {
+        font-family: "Cormorant Garamond", serif;
+      }
+      .glass-nav {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(212, 163, 115, 0.1);
+      }
+      .no-wrap {
+        white-space: nowrap;
+        word-break: keep-all;
+      }
+      .map-container {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        border-radius: 20px;
+      }
+      .map-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+      .rotating {
+        animation: rotate 3s linear infinite;
+      }
+      @keyframes rotate {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <audio id="bgMusic" loop>
+      <source
+        src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+        type="audio/mpeg"
+      />
+    </audio>
+
+    <button
+      onclick="toggleMusic()"
+      id="musicBtn"
+      class="fixed bottom-8 right-8 z-50 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center border border-[#d4a373]/30"
+    >
+      <span id="musicIcon" class="text-[#d4a373] text-xl">♫</span>
+    </button>
+
+    <nav
+      class="glass-nav fixed top-0 w-full z-50 px-6 py-4 flex justify-between items-center"
+    >
+      <div class="serif-en text-2xl font-medium tracking-widest text-[#d4a373]">
+        C & Z
+      </div>
+      <div class="flex space-x-6 text-sm tracking-widest font-medium">
+        <a href="#" class="text-[#d4a373] border-b-2 border-[#d4a373]"
+          >電子喜帖</a
+        >
+        <a
+          href="rsvp.html"
+          class="text-slate-400 hover:text-[#d4a373] transition"
+          >出席回函</a
+        >
+      </div>
+    </nav>
+
+    <div class="pt-16">
+      <section
+        class="h-[90vh] flex items-center justify-center text-center bg-cover bg-center relative"
+        style="
+          background-image:
+            linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)),
+            url(&quot;https://i.postimg.cc/hGkkYy50/img-463.jpg&quot;);
+        "
+      >
+        <div class="text-white px-4 animate-fade-in">
+          <h2 class="serif-en text-2xl italic mb-3 tracking-[0.2em]">
+            Seven Days, Seven Years
+          </h2>
+          <h1 class="text-5xl md:text-7xl font-medium mb-8 tracking-[0.3em]">
+            柒天柒年
+          </h1>
+          <p class="text-lg md:text-xl tracking-[0.4em] font-light">
+            昶毓 & 姿穎
+          </p>
+        </div>
+      </section>
+
+      <section class="py-24 px-8 bg-white text-center">
+        <div class="max-w-xl mx-auto space-y-8">
+          <h3
+            class="serif-en text-[#d4a373] text-xl tracking-[0.3em] uppercase italic"
+          >
+            Our Story
+          </h3>
+          <div class="h-[1px] w-12 bg-[#d4a373] mx-auto"></div>
+          <div class="text-slate-600 leading-[2.2] tracking-widest font-light">
+            那天，是我們相識的第七天。<br />
+            沒想到，這一眼便是七年的陪伴。<br />
+            從青澀的相遇，到日常的瑣碎，<br />
+            時光將愛凝煉成最溫暖的模樣。<br /><br />
+            這份「柒天柒年」的約定，<br />
+            希望能邀您一同見證，<br />
+            未來的無數個七年。
+          </div>
+        </div>
+      </section>
+
+      <section class="py-20 px-6 bg-[#f9f9f7]">
+        <div
+          class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
+        >
+          <div class="text-center md:text-right space-y-4">
+            <h4 class="text-2xl font-medium text-slate-800">新郎 昶毓</h4>
+            <p class="text-sm text-[#8da399] serif-en italic">
+              The Groom | Chang Yu
+            </p>
+            <p class="text-slate-500 leading-relaxed text-sm">
+              沉穩踏實，<br />是家裡最堅強的依靠，<br />也是姿穎身後最溫柔的影子。
+            </p>
+          </div>
+          <div class="text-center md:text-left space-y-4">
+            <h4 class="text-2xl font-medium text-slate-800">新娘 姿穎</h4>
+            <p class="text-sm text-[#8da399] serif-en italic">
+              The Bride | Zi Ying
+            </p>
+            <p class="text-slate-500 leading-relaxed text-sm">
+              靈動體貼，<br />像暖陽般照亮生活，<br />是昶毓生命中最美好的驚喜。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-24 px-6 max-w-4xl mx-auto">
+        <div class="text-center mb-16">
+          <h3 class="text-2xl font-medium tracking-[0.2em] mb-4">婚禮詳情</h3>
+          <p class="text-slate-500 text-sm">
+            2026.07.16 星期四 | 12:00 入席 12:30 開席
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+          <div
+            class="space-y-8 bg-white p-8 rounded-3xl border border-gray-100 shadow-sm"
+          >
+            <div class="flex items-start gap-4">
+              <div class="text-[#d4a373] text-xl">📍</div>
+              <div>
+                <p class="font-bold text-slate-800 no-wrap">
+                  台中新天地崇德店 | 5樓 凱薩廳
+                </p>
+                <p class="text-sm text-slate-500 mt-1">
+                  台中市北屯區崇德五路345號1樓
+                </p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="text-[#d4a373] text-xl">🚗</div>
+              <div>
+                <p class="font-bold text-slate-800">停車資訊</p>
+                <p class="text-sm text-slate-500 mt-1">
+                  備有專屬停車場，賓客可享免費停車。
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="map-container shadow-lg">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3640.1066420556156!2d120.6841261153664!3d24.167990478643884!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346917e76df38a7b%3A0xc36a46973e61f237!2z5paw5aSp5ZywLeW0h-W-t-W6lw!5e0!3m2!1szh-TW!2stw!4v1715600000000!5m2!1szh-TW!2stw"
+              allowfullscreen=""
+              loading="lazy"
+            ></iframe>
+          </div>
+        </div>
+
+        <div class="text-center mt-20">
+          <a
+            href="rsvp.html"
+            class="inline-block bg-[#d4a373] text-white px-12 py-4 rounded-full shadow-lg hover:bg-[#c29161] transition tracking-widest"
+          >
+            前往填寫出席回函
+          </a>
+        </div>
+      </section>
+    </div>
+
+    <footer
+      class="py-12 text-center text-xs text-slate-300 tracking-[0.4em] uppercase bg-white"
+    >
+      Designed for Chang Yu & Zi Ying | 2026.07.16
+    </footer>
+
+    <script>
+      let isPlaying = false;
+      const music = document.getElementById("bgMusic");
+      const musicBtn = document.getElementById("musicBtn");
+      function toggleMusic() {
+        if (!isPlaying) {
+          music.play();
+          musicBtn.classList.add("rotating");
+          document.getElementById("musicIcon").innerText = "⏸";
+        } else {
+          music.pause();
+          musicBtn.classList.remove("rotating");
+          document.getElementById("musicIcon").innerText = "♫";
+        }
+        isPlaying = !isPlaying;
+      }
+    </script>
+  </body>
+</html>
