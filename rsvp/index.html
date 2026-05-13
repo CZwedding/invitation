@@ -110,8 +110,7 @@
 
         <!--
           正式版：target="_blank"
-          測試時可暫時改成 target="_blank"，送出後會打開 Google 表單回應頁，
-          若 Google 表單有必填欄位缺漏或選項值不符，會直接看到錯誤。
+          若需除錯，可暫時改成 target="_blank"，送出後會開啟 Google 表單檢查頁。
         -->
         <form
           action="https://docs.google.com/forms/d/e/1FAIpQLSeXJvhL855NqkjFCsHgeZ5HAyDJXfBw3nwKEOLVuz1dj2XGoA/formResponse"
@@ -152,7 +151,7 @@
               >
                 <option value="" disabled selected>請選擇您的關係...</option>
                 <option value="男方親友">男方親友</option>
-                <option value="女方親友">女方親友</option>
+                <option value="女方朋友">女方朋友</option>
               </select>
             </div>
 
@@ -164,15 +163,11 @@
               </label>
               <input
                 type="text"
-                id="vMet"
+                name="entry.2109635832"
                 required
                 class="w-full px-5 py-4 bg-[#f9f9f7] border-none shadow-sm"
-                placeholder="例：大學同學"
+                placeholder="例：國中同學、大學同學、同事等"
               />
-
-              <!-- 男方 / 女方分流用欄位 -->
-              <input type="hidden" id="entryGMet" name="entry.2109635832" />
-              <input type="hidden" id="entryBMet" name="entry.754579317" />
             </div>
 
             <div>
@@ -183,6 +178,7 @@
               </label>
               <select
                 id="vAtt"
+                name="entry.839371500"
                 required
                 onchange="handleLogic()"
                 class="w-full px-5 py-4 bg-[#f9f9f7] border-none shadow-sm"
@@ -195,10 +191,6 @@
                   嗚嗚，這天剛好不行，祝你們婚禮順利圓滿 😭
                 </option>
               </select>
-
-              <!-- 男方 / 女方分流用欄位 -->
-              <input type="hidden" id="entryGAtt" name="entry.839371500" />
-              <input type="hidden" id="entryBAtt" name="entry.1594906775" />
             </div>
 
             <div
@@ -231,6 +223,7 @@
                       大人人數
                     </label>
                     <input
+                      id="adultCount"
                       type="number"
                       name="entry.957124862"
                       class="w-full px-4 py-2 bg-white border border-gray-100"
@@ -238,6 +231,7 @@
                       min="1"
                     />
                   </div>
+
                   <div>
                     <label
                       class="block text-[10px] font-bold mb-1 text-slate-400 uppercase"
@@ -367,16 +361,6 @@
         });
       }
 
-      function setRequiredWhenEnabled(sectionId, selector, required) {
-        const section = document.getElementById(sectionId);
-        if (!section) return;
-
-        const field = section.querySelector(selector);
-        if (field) {
-          field.required = required;
-        }
-      }
-
       function handleLogic() {
         const att = document.getElementById("vAtt").value;
         const comp = document.getElementById("vComp").value;
@@ -401,43 +385,14 @@
           field.disabled = !(isAttend && hasCompanion);
         });
 
-        // 前端必填控制：只在該區塊顯示時才必填
-        setRequiredWhenEnabled("attendBox", "#vComp", isAttend);
-        setRequiredWhenEnabled("absentBox", "#vAbsentOption", isAbsent);
+        const absentOption = document.getElementById("vAbsentOption");
+        absentOption.required = isAbsent;
 
-        // 攜伴時建議大人人數必填；未攜伴則不送出
-        const adultCount = document.querySelector('input[name="entry.957124862"]');
-        if (adultCount) {
-          adultCount.required = isAttend && hasCompanion;
-        }
+        const adultCount = document.getElementById("adultCount");
+        adultCount.required = isAttend && hasCompanion;
       }
 
       function prepareSubmit() {
-        const rel = document.getElementById("relSelect").value;
-        const met = document.getElementById("vMet").value.trim();
-        const att = document.getElementById("vAtt").value;
-
-        if (!rel || !met || !att) {
-          return false;
-        }
-
-        // 先清空所有分流欄位，避免殘值
-        document.getElementById("entryGMet").value = "";
-        document.getElementById("entryGAtt").value = "";
-        document.getElementById("entryBMet").value = "";
-        document.getElementById("entryBAtt").value = "";
-
-        // 派發資料到正確的 Google 表單欄位
-        if (rel === "男方親友") {
-          document.getElementById("entryGMet").value = met;
-          document.getElementById("entryGAtt").value = att;
-        }
-
-        if (rel === "女方親友") {
-          document.getElementById("entryBMet").value = met;
-          document.getElementById("entryBAtt").value = att;
-        }
-
         handleLogic();
 
         const submitBtn = document.getElementById("submitBtn");
@@ -447,8 +402,7 @@
 
         submitted = true;
 
-        // 除錯模式：不要自動顯示成功，直接讓 Google Forms 在新分頁顯示真正結果。
-        // 如果 Google 表單退件，會在新分頁看到缺少哪個欄位。
+        // 除錯版不自動顯示成功，直接看 Google 表單檢查頁。
         return true;
       }
 
