@@ -30,10 +30,14 @@
       input,
       select,
       textarea {
-        appearance: none;
-        -webkit-appearance: none;
         border-radius: 8px !important;
         outline: none;
+        transition: all 0.3s;
+      }
+      input:focus,
+      select:focus,
+      textarea:focus {
+        box-shadow: 0 0 0 1px var(--morandi-tan);
       }
       .hidden-section {
         display: none;
@@ -62,7 +66,8 @@
         class="max-w-xl mx-auto bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-gray-100 relative"
       >
         <div class="absolute top-0 left-0 w-full h-2 bg-[#d4a373]"></div>
-        <div class="text-center mb-10">
+
+        <div class="text-center mb-10 mt-2">
           <h3 class="text-2xl font-medium mb-2 tracking-widest text-slate-800">
             出席回函
           </h3>
@@ -75,6 +80,7 @@
 
         <iframe
           name="hidden_iframe"
+          id="hidden_iframe"
           style="display: none"
           onload="
             if (submitted) {
@@ -82,10 +88,12 @@
             }
           "
         ></iframe>
+
         <form
           action="https://docs.google.com/forms/d/e/1FAIpQLSem4ZcpMaJVH0NF3BLdRGkHF0g_7PPPGOYUKGmHcsTDLK1thg/formResponse"
           method="post"
           target="hidden_iframe"
+          id="weddingForm"
           onsubmit="return prepareSubmit();"
         >
           <div id="formContent" class="space-y-8">
@@ -96,24 +104,26 @@
               >
               <input
                 type="text"
+                id="real_name"
                 name="entry.162623246"
                 required
-                class="w-full px-5 py-4 bg-[#f9f9f7] border-none"
+                class="w-full px-5 py-4 bg-[#f9f9f7] border-none shadow-sm"
+                placeholder="請輸入姓名"
               />
             </div>
 
             <div>
               <label
                 class="block text-xs font-bold mb-3 text-slate-400 uppercase tracking-widest"
-                >關係 RELATION *</label
+                >與新人的關係 RELATION *</label
               >
               <select
-                id="rel"
+                id="real_rel"
                 name="entry.1835028889"
                 required
-                class="w-full px-5 py-4 bg-[#f9f9f7] border-none"
+                class="w-full px-5 py-4 bg-[#f9f9f7] border-none shadow-sm"
               >
-                <option value="" disabled selected>請選擇...</option>
+                <option value="" disabled selected>請選擇您的關係...</option>
                 <option value="男方親友">男方親友</option>
                 <option value="女方親友">女方親友</option>
               </select>
@@ -126,16 +136,13 @@
               >
               <input
                 type="text"
-                id="met"
+                id="v_met"
                 required
-                class="w-full px-5 py-4 bg-[#f9f9f7] border-none"
-                placeholder="例：大學同學"
+                class="w-full px-5 py-4 bg-[#f9f9f7] border-none shadow-sm"
+                placeholder="例如：大學同學、前同事"
               />
-              <input type="hidden" id="gMet" name="entry.2109635832" /><input
-                type="hidden"
-                id="bMet"
-                name="entry.754579317"
-              />
+              <input type="hidden" id="entry_gMet" name="entry.2109635832" />
+              <input type="hidden" id="entry_bMet" name="entry.754579317" />
             </div>
 
             <div>
@@ -144,12 +151,12 @@
                 >是否能來見證幸福 ATTENDANCE *</label
               >
               <select
-                id="att"
+                id="v_att"
                 required
-                onchange="handleLogic()"
-                class="w-full px-5 py-4 bg-[#f9f9f7] border-none"
+                onchange="handleFormLogic()"
+                class="w-full px-5 py-4 bg-[#f9f9f7] border-none shadow-sm"
               >
-                <option value="" disabled selected>請選擇...</option>
+                <option value="" disabled selected>請選擇出席意願...</option>
                 <option value="肚子準備好了！一定準時報到吃喜酒 🍽️">
                   肚子準備好了！一定準時報到吃喜酒 🍽️
                 </option>
@@ -157,25 +164,22 @@
                   嗚嗚，這天剛好不行，祝你們婚禮順利圓滿 😭
                 </option>
               </select>
-              <input type="hidden" id="gAtt" name="entry.839371500" /><input
-                type="hidden"
-                id="bAtt"
-                name="entry.1594906775"
-              />
+              <input type="hidden" id="entry_gAtt" name="entry.839371500" />
+              <input type="hidden" id="entry_bAtt" name="entry.1594906775" />
             </div>
 
             <div
               id="attendBox"
-              class="hidden-section space-y-8 bg-[#fdfdfb] p-6 rounded-2xl border border-gray-50"
+              class="hidden-section space-y-8 bg-[#fdfdfb] p-6 rounded-2xl border border-gray-50 shadow-inner"
             >
               <div>
                 <label class="block text-xs font-bold mb-2 text-[#d4a373]"
                   >攜伴參加 COMPANIONS *</label
                 >
                 <select
-                  id="comp"
+                  id="v_comp"
                   name="entry.1719850992"
-                  onchange="handleLogic()"
+                  onchange="handleFormLogic()"
                   class="w-full px-4 py-3 bg-white border border-gray-100"
                 >
                   <option value="只有我一個人出席喔！🙌">
@@ -187,7 +191,7 @@
               <div id="compDetail" class="hidden-section">
                 <label
                   class="block text-xs font-bold mb-2 text-slate-400 uppercase tracking-widest"
-                  >人數與兒童椅備註</label
+                  >人數及兒童椅備註</label
                 >
                 <input
                   type="text"
@@ -217,13 +221,18 @@
               >
               <select
                 name="entry.1673142063"
-                class="w-full px-5 py-4 bg-[#f9f9f7] border-none"
+                class="w-full px-5 py-4 bg-[#f9f9f7] border-none shadow-sm"
               >
                 <option value="給我電子喜帖就好，我的祝福一樣滿滿的📱">
-                  給我電子喜帖就好
+                  給我電子喜帖就好，我的祝福一樣滿滿的📱
                 </option>
                 <option value="請寄實體喜帖給我沾沾喜氣 📮">
-                  請寄實體喜帖給我沾沾喜氣
+                  請寄實體喜帖給我沾沾喜氣 📮
+                </option>
+                <option
+                  value="人不到但心意要到！請提供匯款帳號/收件地址讓我送上祝福 🎁"
+                >
+                  提供帳號/地址送上祝福
                 </option>
               </select>
             </div>
@@ -231,18 +240,19 @@
             <div>
               <label
                 class="block text-xs font-bold mb-3 text-slate-400 uppercase tracking-widest"
-                >祝福語 MESSAGE</label
+                >給我們的祝福 MESSAGE</label
               >
               <textarea
                 name="entry.994223227"
                 rows="3"
-                class="w-full px-5 py-4 bg-[#f9f9f7] border-none"
+                class="w-full px-5 py-4 bg-[#f9f9f7] border-none shadow-sm"
+                placeholder="留下您的祝福..."
               ></textarea>
             </div>
 
             <button
               type="submit"
-              class="w-full bg-[#d4a373] text-white py-5 rounded-2xl font-bold tracking-[0.3em] hover:shadow-lg transition"
+              class="w-full bg-[#d4a373] text-white py-5 rounded-2xl font-bold tracking-[0.3em] hover:shadow-xl transition-all active:scale-95 shadow-md"
             >
               確認送出 SUBMIT
             </button>
@@ -254,7 +264,7 @@
               回傳成功！
             </h4>
             <p class="text-slate-500 text-sm leading-relaxed mb-10">
-              期待與您共享喜悅。
+              昶毓 & 姿穎 已收到您的回覆。<br />期待與您分享喜悅！
             </p>
             <a
               href="../"
@@ -267,39 +277,55 @@
     </div>
 
     <script>
-      function handleLogic() {
-        const a = document.getElementById("att").value,
-          c = document.getElementById("comp").value;
-        document.getElementById("attendBox").style.display = a.includes(
+      function handleFormLogic() {
+        const att = document.getElementById("v_att").value;
+        const comp = document.getElementById("v_comp").value;
+
+        document.getElementById("attendBox").style.display = att.includes(
           "肚子準備好了",
         )
           ? "block"
           : "none";
-        document.getElementById("absentBox").style.display = a.includes("嗚嗚")
+        document.getElementById("absentBox").style.display = att.includes(
+          "嗚嗚",
+        )
           ? "block"
           : "none";
         document.getElementById("compDetail").style.display =
-          a.includes("肚子準備好了") && c === "我要攜伴！" ? "block" : "none";
+          att.includes("肚子準備好了") && comp === "我要攜伴！"
+            ? "block"
+            : "none";
       }
+
       let submitted = false;
       function prepareSubmit() {
-        const r = document.getElementById("rel").value,
-          m = document.getElementById("met").value,
-          a = document.getElementById("att").value;
-        if (r === "男方親友") {
-          document.getElementById("gMet").value = m;
-          document.getElementById("gAtt").value = a;
-        } else {
-          document.getElementById("bMet").value = m;
-          document.getElementById("bAtt").value = a;
+        const rel = document.getElementById("real_rel").value;
+        const metValue = document.getElementById("v_met").value;
+        const attValue = document.getElementById("v_att").value;
+
+        // 重要：先清空所有分流欄位，避免重複
+        document.getElementById("entry_gMet").value = "";
+        document.getElementById("entry_bMet").value = "";
+        document.getElementById("entry_gAtt").value = "";
+        document.getElementById("entry_bAtt").value = "";
+
+        // 根據選取的關係，將數值填入對應的 Google 欄位
+        if (rel === "男方親友") {
+          document.getElementById("entry_gMet").value = metValue;
+          document.getElementById("entry_gAtt").value = attValue;
+        } else if (rel === "女方親友") {
+          document.getElementById("entry_bMet").value = metValue;
+          document.getElementById("entry_bAtt").value = attValue;
         }
+
         submitted = true;
         return true;
       }
+
       function showSuccess() {
         document.getElementById("formContent").style.display = "none";
         document.getElementById("successMsg").style.display = "block";
-        window.scrollTo(0, 0);
+        window.scrollTo({ top: 0, behavior: "smooth" });
       }
     </script>
   </body>
