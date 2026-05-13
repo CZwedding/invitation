@@ -109,14 +109,14 @@
         ></iframe>
 
         <!--
-          正式版：target="hidden_iframe"
+          正式版：target="_blank"
           測試時可暫時改成 target="_blank"，送出後會打開 Google 表單回應頁，
           若 Google 表單有必填欄位缺漏或選項值不符，會直接看到錯誤。
         -->
         <form
           action="https://docs.google.com/forms/d/e/1FAIpQLSeXJvhL855NqkjFCsHgeZ5HAyDJXfBw3nwKEOLVuz1dj2XGoA/formResponse"
           method="post"
-          target="hidden_iframe"
+          target="_blank"
           id="weddingForm"
           onsubmit="return prepareSubmit();"
         >
@@ -442,20 +442,13 @@
 
         const submitBtn = document.getElementById("submitBtn");
         submitBtn.disabled = true;
-        submitBtn.textContent = "送出中...";
+        submitBtn.textContent = "已開啟 Google 表單檢查頁";
         submitBtn.classList.add("opacity-70", "cursor-not-allowed");
 
         submitted = true;
 
-        // Google Forms 有時不會穩定觸發 hidden iframe onload，
-        // 加一個保底顯示，避免畫面停在「送出中...」。
-        clearTimeout(submitFallbackTimer);
-        submitFallbackTimer = setTimeout(() => {
-          if (submitted) {
-            showSuccess();
-          }
-        }, 2500);
-
+        // 除錯模式：不要自動顯示成功，直接讓 Google Forms 在新分頁顯示真正結果。
+        // 如果 Google 表單退件，會在新分頁看到缺少哪個欄位。
         return true;
       }
 
