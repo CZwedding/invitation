@@ -357,6 +357,10 @@
         document.getElementById("compDetail").style.display =
           isAttend && hasCompanion ? "block" : "none";
 
+        // 確保攜伴選擇框始終可用（在 attendBox 顯示時）
+        const vComp = document.getElementById("vComp");
+        vComp.disabled = !isAttend;
+
         setSectionEnabled("attendBox", isAttend);
         setSectionEnabled("absentBox", isAbsent);
 
@@ -369,10 +373,14 @@
         });
 
         const absentOption = document.getElementById("vAbsentOption");
-        absentOption.required = isAbsent;
+        if (absentOption) {
+          absentOption.required = isAbsent;
+        }
 
         const adultCount = document.getElementById("adultCount");
-        adultCount.required = isAttend && hasCompanion;
+        if (adultCount) {
+          adultCount.required = isAttend && hasCompanion;
+        }
       }
 
       function prepareSubmit() {
