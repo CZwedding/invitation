@@ -75,7 +75,14 @@
         C & Z
       </div>
       <div class="flex space-x-6 text-sm tracking-widest font-medium">
-        <a href="../" class="text-slate-400 hover:text-[#d4a373] transition">
+        <a
+          id="navInvitationLink"
+          data-href="../"
+          aria-disabled="true"
+          title="此連結暫時停用（僅限出席回函頁面）"
+          tabindex="-1"
+          class="text-slate-400 opacity-60 cursor-not-allowed"
+        >
           電子喜帖
         </a>
         <a href="#" class="text-[#d4a373] border-b-2 border-[#d4a373]">
@@ -214,6 +221,7 @@
                   onchange="handleLogic()"
                   class="w-full px-4 py-3 bg-white border border-gray-100"
                 >
+                  <option value="" disabled selected>請選擇攜伴狀態...</option>
                   <option value="只有我一個人出席喔！🙌">
                     只有我一個人出席喔！🙌
                   </option>
@@ -315,12 +323,7 @@
             <p class="text-slate-500 text-sm leading-relaxed mb-10">
               昶毓 & 姿穎 已收到您的祝福。<br />期待與您分享喜悅！
             </p>
-            <a
-              href="../"
-              class="text-[#d4a373] text-xs underline tracking-widest"
-            >
-              回到電子喜帖首頁
-            </a>
+            <!-- 已移除：回到電子喜帖首頁按鈕（需求：送出後不顯示） -->
           </div>
         </form>
       </div>
@@ -341,36 +344,46 @@
       }
 
       function handleLogic() {
-        const att = document.getElementById("vAtt").value;
-        const comp = document.getElementById("vComp").value;
+        const attEl = document.getElementById("vAtt");
+        const compEl = document.getElementById("vComp");
+        const att = attEl ? attEl.value : "";
+        const comp = compEl ? compEl.value : "";
 
         const isAttend = att.includes("肚子準備好了");
         const isAbsent = att.includes("嗚嗚");
         const hasCompanion = comp === "我要攜伴！";
 
-        document.getElementById("attendBox").style.display = isAttend
-          ? "block"
-          : "none";
-        document.getElementById("absentBox").style.display = isAbsent
-          ? "block"
-          : "none";
-        document.getElementById("compDetail").style.display =
-          isAttend && hasCompanion ? "block" : "none";
+        const attendBoxEl = document.getElementById("attendBox");
+        if (attendBoxEl) {
+          attendBoxEl.style.display = isAttend ? "block" : "none";
+        }
 
-        // 確保攜伴選擇框始終可用（在 attendBox 顯示時）
-        const vComp = document.getElementById("vComp");
-        vComp.disabled = !isAttend;
+        const absentBoxEl = document.getElementById("absentBox");
+        if (absentBoxEl) {
+          absentBoxEl.style.display = isAbsent ? "block" : "none";
+        }
+
+        const compDetailEl = document.getElementById("compDetail");
+        if (compDetailEl) {
+          compDetailEl.style.display =
+            isAttend && hasCompanion ? "block" : "none";
+        }
+
+        if (compEl) {
+          compEl.disabled = !isAttend;
+        }
 
         setSectionEnabled("attendBox", isAttend);
         setSectionEnabled("absentBox", isAbsent);
 
-        const compDetailFields = document
-          .getElementById("compDetail")
-          .querySelectorAll("input, select, textarea");
-
-        compDetailFields.forEach((field) => {
-          field.disabled = !(isAttend && hasCompanion);
-        });
+        if (compDetailEl) {
+          const compDetailFields = compDetailEl.querySelectorAll(
+            "input, select, textarea",
+          );
+          compDetailFields.forEach((field) => {
+            field.disabled = !(isAttend && hasCompanion);
+          });
+        }
 
         const absentOption = document.getElementById("vAbsentOption");
         if (absentOption) {
@@ -413,6 +426,21 @@
       function showSuccess() {
         document.getElementById("formContent").style.display = "none";
         document.getElementById("successMsg").style.display = "block";
+
+        // 送出成功後恢復導航列「電子喜帖」連結與樣式
+        const navLink = document.getElementById("navInvitationLink");
+        if (navLink) {
+          const href =
+            navLink.dataset && navLink.dataset.href
+              ? navLink.dataset.href
+              : "../";
+          navLink.setAttribute("href", href);
+          navLink.removeAttribute("aria-disabled");
+          navLink.removeAttribute("tabindex");
+          navLink.classList.remove("opacity-60", "cursor-not-allowed");
+          navLink.classList.add("hover:text-[#d4a373]", "transition");
+        }
+
         window.scrollTo({ top: 0, behavior: "smooth" });
       }
 
