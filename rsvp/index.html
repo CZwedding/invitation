@@ -9,62 +9,16 @@
       rel="stylesheet"
     />
     <script src="https://cdn.tailwindcss.com"></script>
-
     <style>
       :root {
-        --cinema-black: #070404;
-        --deep-red: #4b0205;
-        --wine-red: #7b0709;
-        --soft-red: #9b1718;
-        --ivory-card: #fff7ea;
-        --ivory-light: #fffbf3;
-        --field-bg: #f7ead8;
-        --champagne: #c9a86a;
-        --champagne-soft: #ecd8ad;
-        --text-main: #251614;
-        --text-muted: #8a6d5b;
-        --line-soft: rgba(201, 168, 106, 0.34);
+        --morandi-tan: #800000;
+        --soft-white: #fafaf8;
       }
 
       body {
         font-family: "Noto Serif TC", serif;
-        background:
-          radial-gradient(
-            circle at 50% -10%,
-            rgba(255, 210, 150, 0.18),
-            transparent 34%
-          ),
-          radial-gradient(
-            circle at 50% 18%,
-            rgba(155, 23, 24, 0.55),
-            transparent 42%
-          ),
-          linear-gradient(180deg, #8a080a 0%, #5c0306 42%, #2a0103 100%);
-        color: var(--text-main);
-        min-height: 100vh;
-      }
-
-      body::before {
-        content: "";
-        position: fixed;
-        inset: 0;
-        pointer-events: none;
-        opacity: 0.22;
-        background:
-          linear-gradient(
-            90deg,
-            rgba(0, 0, 0, 0.24),
-            transparent 22%,
-            transparent 78%,
-            rgba(0, 0, 0, 0.28)
-          ),
-          repeating-linear-gradient(
-            90deg,
-            rgba(255, 255, 255, 0.025) 0px,
-            rgba(255, 255, 255, 0.025) 1px,
-            transparent 1px,
-            transparent 80px
-          );
+        background-color: var(--soft-white);
+        color: #4a4a4a;
       }
 
       .serif-en {
@@ -72,9 +26,9 @@
       }
 
       .glass-nav {
-        background: rgba(7, 4, 4, 0.82);
-        backdrop-filter: blur(12px);
-        border-bottom: 1px solid rgba(201, 168, 106, 0.28);
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(212, 163, 115, 0.1);
       }
 
       input,
@@ -83,21 +37,12 @@
         border-radius: 8px !important;
         outline: none;
         transition: all 0.3s;
-        color: var(--text-main);
-      }
-
-      input::placeholder,
-      textarea::placeholder {
-        color: rgba(138, 109, 91, 0.58);
       }
 
       input:focus,
       select:focus,
       textarea:focus {
-        box-shadow:
-          0 0 0 1px var(--champagne),
-          0 8px 22px rgba(75, 2, 5, 0.08);
-        background-color: var(--ivory-light);
+        box-shadow: 0 0 0 1px var(--morandi-tan);
       }
 
       .hidden-section {
@@ -126,7 +71,7 @@
     <nav
       class="glass-nav fixed top-0 w-full z-50 px-6 py-4 flex justify-between items-center"
     >
-      <div class="serif-en text-2xl font-medium tracking-widest text-[#ecd8ad]">
+      <div class="serif-en text-2xl font-medium tracking-widest text-[#800000]">
         C & Z
       </div>
       <div class="flex space-x-6 text-sm tracking-widest font-medium">
@@ -136,31 +81,28 @@
           aria-disabled="true"
           title="此連結暫時停用（僅限出席回函頁面）"
           tabindex="-1"
-          class="text-[#fff7ea]/45 opacity-60 cursor-not-allowed"
+          class="text-slate-400 opacity-60 cursor-not-allowed"
         >
           電子喜帖
         </a>
-        <a href="#" class="text-[#ecd8ad] border-b-2 border-[#c9a86a]">
+        <a href="#" class="text-[#800000] border-b-2 border-[#800000]">
           出席回函
         </a>
       </div>
     </nav>
 
-    <div class="pt-32 px-6 pb-20 min-h-[90vh] relative z-10">
+    <div class="pt-32 px-6 pb-20 min-h-[90vh]">
       <div
-        class="max-w-xl mx-auto bg-[#fff7ea] p-8 md:p-12 rounded-3xl shadow-[0_30px_80px_rgba(0,0,0,0.38)] border border-[#c9a86a]/35 relative overflow-hidden"
+        class="max-w-xl mx-auto bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-gray-100 relative overflow-hidden"
       >
-        <div class="absolute top-0 left-0 w-full h-2 bg-[#070404]"></div>
-        <div
-          class="absolute inset-0 pointer-events-none rounded-3xl border border-white/50"
-        ></div>
+        <div class="absolute top-0 left-0 w-full h-2 bg-[#800000]"></div>
 
-        <div class="text-center mb-10 mt-2 relative z-10">
-          <h3 class="text-2xl font-medium mb-2 tracking-widest text-[#251614]">
+        <div class="text-center mb-10 mt-2">
+          <h3 class="text-2xl font-medium mb-2 tracking-widest text-slate-800">
             出席回函
           </h3>
           <p
-            class="serif-en text-sm text-[#7b0709] italic uppercase tracking-widest"
+            class="serif-en text-sm text-[#8da399] italic uppercase tracking-widest"
           >
             RSVP Survey
           </p>
@@ -173,20 +115,23 @@
           onload="handleIframeLoad()"
         ></iframe>
 
+        <!--
+          正式版：target="hidden_iframe"
+          若需除錯，可暫時改成 target="_blank"，送出後會開啟 Google 表單檢查頁。
+        -->
         <form
           action="https://docs.google.com/forms/d/e/1FAIpQLSeXJvhL855NqkjFCsHgeZ5HAyDJXfBw3nwKEOLVuz1dj2XGoA/formResponse"
           method="post"
           target="hidden_iframe"
           id="weddingForm"
           onsubmit="return prepareSubmit();"
-          class="relative z-10"
         >
           <input type="hidden" name="pageHistory" value="0" />
 
           <div id="formContent" class="space-y-8">
             <div>
               <label
-                class="block text-xs font-bold mb-3 text-[#8a6d5b] uppercase tracking-widest"
+                class="block text-xs font-bold mb-3 text-slate-400 uppercase tracking-widest"
               >
                 姓名 NAME *
               </label>
@@ -194,14 +139,14 @@
                 type="text"
                 name="entry.162623246"
                 required
-                class="w-full px-5 py-4 bg-[#f7ead8] border-none shadow-sm"
+                class="w-full px-5 py-4 bg-[#f9f9f7] border-none shadow-sm"
                 placeholder="請輸入姓名"
               />
             </div>
 
             <div>
               <label
-                class="block text-xs font-bold mb-3 text-[#8a6d5b] uppercase tracking-widest"
+                class="block text-xs font-bold mb-3 text-slate-400 uppercase tracking-widest"
               >
                 與新人的關係 RELATION *
               </label>
@@ -209,7 +154,7 @@
                 id="relSelect"
                 name="entry.1835028889"
                 required
-                class="w-full px-5 py-4 bg-[#f7ead8] border-none shadow-sm"
+                class="w-full px-5 py-4 bg-[#f9f9f7] border-none shadow-sm"
               >
                 <option value="" disabled selected>請選擇您的關係...</option>
                 <option value="男方親友">男方親友</option>
@@ -219,14 +164,14 @@
 
             <div>
               <label
-                class="block text-xs font-bold mb-3 text-[#8a6d5b] uppercase tracking-widest"
+                class="block text-xs font-bold mb-3 text-slate-400 uppercase tracking-widest"
               >
                 認識緣分 HOW WE MET *
               </label>
               <select
                 name="entry.2109635832"
                 required
-                class="w-full px-5 py-4 bg-[#f7ead8] border-none shadow-sm"
+                class="w-full px-5 py-4 bg-[#f9f9f7] border-none shadow-sm"
               >
                 <option value="" disabled selected>請選擇認識方式...</option>
                 <option value="親戚">親戚</option>
@@ -241,7 +186,7 @@
 
             <div>
               <label
-                class="block text-xs font-bold mb-3 text-[#8a6d5b] uppercase tracking-widest"
+                class="block text-xs font-bold mb-3 text-slate-400 uppercase tracking-widest"
               >
                 是否能來見證幸福 ATTENDANCE *
               </label>
@@ -250,7 +195,7 @@
                 name="entry.839371500"
                 required
                 onchange="handleLogic()"
-                class="w-full px-5 py-4 bg-[#f7ead8] border-none shadow-sm"
+                class="w-full px-5 py-4 bg-[#f9f9f7] border-none shadow-sm"
               >
                 <option value="" disabled selected>請選擇出席意願...</option>
                 <option value="肚子準備好了！一定準時報到吃喜酒 🍽️">
@@ -264,17 +209,17 @@
 
             <div
               id="attendBox"
-              class="hidden-section space-y-8 bg-[#fffbf3] p-6 rounded-2xl border border-[#c9a86a]/30 shadow-inner fade-in"
+              class="hidden-section space-y-8 bg-[#fdfdfb] p-6 rounded-2xl border border-gray-50 shadow-inner fade-in"
             >
               <div>
-                <label class="block text-xs font-bold mb-2 text-[#7b0709]">
+                <label class="block text-xs font-bold mb-2 text-[#800000]">
                   攜伴參加 COMPANIONS *
                 </label>
                 <select
                   id="vComp"
                   name="entry.1719850992"
                   onchange="handleLogic()"
-                  class="w-full px-4 py-3 bg-[#fff7ea] border border-[#c9a86a]/30"
+                  class="w-full px-4 py-3 bg-white border border-gray-100"
                 >
                   <option value="" disabled selected>請選擇攜伴狀態...</option>
                   <option value="只有我一個人出席喔！🙌">
@@ -288,7 +233,7 @@
                 <div class="grid grid-cols-2 gap-4">
                   <div>
                     <label
-                      class="block text-[10px] font-bold mb-1 text-[#8a6d5b] uppercase"
+                      class="block text-[10px] font-bold mb-1 text-slate-400 uppercase"
                     >
                       大人人數
                     </label>
@@ -296,7 +241,7 @@
                       id="adultCount"
                       type="number"
                       name="entry.957124862"
-                      class="w-full px-4 py-2 bg-[#fff7ea] border border-[#c9a86a]/30"
+                      class="w-full px-4 py-2 bg-white border border-gray-100"
                       placeholder="含自己"
                       min="1"
                     />
@@ -304,14 +249,14 @@
 
                   <div>
                     <label
-                      class="block text-[10px] font-bold mb-1 text-[#8a6d5b] uppercase"
+                      class="block text-[10px] font-bold mb-1 text-slate-400 uppercase"
                     >
                       小孩人數
                     </label>
                     <input
                       type="number"
                       name="entry.1200218196"
-                      class="w-full px-4 py-2 bg-[#fff7ea] border border-[#c9a86a]/30"
+                      class="w-full px-4 py-2 bg-white border border-gray-100"
                       placeholder="0"
                       min="0"
                     />
@@ -320,26 +265,26 @@
 
                 <div>
                   <label
-                    class="block text-[10px] font-bold mb-1 text-[#8a6d5b] uppercase"
+                    class="block text-[10px] font-bold mb-1 text-slate-400 uppercase"
                   >
                     兒童椅/嬰兒車備註
                   </label>
                   <input
                     type="text"
                     name="entry.1364757732"
-                    class="w-full px-4 py-2 bg-[#fff7ea] border border-[#c9a86a]/30"
+                    class="w-full px-4 py-2 bg-white border border-gray-100"
                     placeholder="例：需1張兒童椅"
                   />
                 </div>
               </div>
 
               <div>
-                <label class="block text-xs font-bold mb-2 text-[#7b0709]">
+                <label class="block text-xs font-bold mb-2 text-[#800000]">
                   飲食需求 DIETARY *
                 </label>
                 <select
                   name="entry.66149520"
-                  class="w-full px-4 py-3 bg-[#fff7ea] border border-[#c9a86a]/30"
+                  class="w-full px-4 py-3 bg-white border border-gray-100"
                 >
                   <option value="我要享用一般葷食">我要享用一般葷食</option>
                   <option value="我需要準備素食餐點">我需要準備素食餐點</option>
@@ -349,14 +294,14 @@
 
             <div>
               <label
-                class="block text-xs font-bold mb-3 text-[#8a6d5b] uppercase tracking-widest"
+                class="block text-xs font-bold mb-3 text-slate-400 uppercase tracking-widest"
               >
                 給我們的祝福 MESSAGE
               </label>
               <textarea
                 name="entry.994223227"
                 rows="3"
-                class="w-full px-5 py-4 bg-[#f7ead8] border-none shadow-sm"
+                class="w-full px-5 py-4 bg-[#f9f9f7] border-none shadow-sm"
                 placeholder="留下您的祝福..."
               ></textarea>
             </div>
@@ -364,7 +309,7 @@
             <button
               id="submitBtn"
               type="submit"
-              class="w-full bg-[#070404] text-[#fff7ea] py-5 rounded-2xl font-bold tracking-[0.3em] hover:bg-[#251614] hover:shadow-xl transition-all shadow-md active:scale-95"
+              class="w-full bg-[#800000] text-white py-5 rounded-2xl font-bold tracking-[0.3em] hover:shadow-xl transition-all shadow-md active:scale-95"
             >
               確認送出 SUBMIT
             </button>
@@ -372,12 +317,13 @@
 
           <div id="successMsg" class="hidden-section text-center py-10">
             <span class="text-5xl block mb-6">✨</span>
-            <h4 class="text-xl font-medium mb-4 text-[#251614] tracking-widest">
+            <h4 class="text-xl font-medium mb-4 text-slate-800 tracking-widest">
               回傳成功！
             </h4>
-            <p class="text-[#8a6d5b] text-sm leading-relaxed mb-10">
+            <p class="text-slate-500 text-sm leading-relaxed mb-10">
               昶毓 & 姿穎 已收到您的祝福。<br />期待與您分享喜悅！
             </p>
+            <!-- 已移除：回到電子喜帖首頁按鈕（需求：送出後不顯示） -->
           </div>
         </form>
       </div>
@@ -481,6 +427,7 @@
         document.getElementById("formContent").style.display = "none";
         document.getElementById("successMsg").style.display = "block";
 
+        // 送出成功後恢復導航列「電子喜帖」連結與樣式
         const navLink = document.getElementById("navInvitationLink");
         if (navLink) {
           const href =
@@ -491,11 +438,7 @@
           navLink.removeAttribute("aria-disabled");
           navLink.removeAttribute("tabindex");
           navLink.classList.remove("opacity-60", "cursor-not-allowed");
-          navLink.classList.add(
-            "text-[#fff7ea]",
-            "hover:text-[#c9a86a]",
-            "transition",
-          );
+          navLink.classList.add("hover:text-[#800000]", "transition");
         }
 
         window.scrollTo({ top: 0, behavior: "smooth" });
