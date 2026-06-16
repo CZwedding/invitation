@@ -4,45 +4,584 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>出席回函 | 昶毓 & 姿穎</title>
+
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Noto+Serif+TC:wght@300;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;700&family=Playfair+Display:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
+
     <script src="https://cdn.tailwindcss.com"></script>
+
     <style>
       :root {
-        --morandi-tan: #800000;
-        --soft-white: #fafaf8;
+        --rsvp-bg: url("/image/rsvp-curtain-real.png");
+
+        --title-white: rgba(255, 255, 255, 1);
+        --label-white: rgba(255, 248, 250, 0.94);
+        --label-en-white: rgba(255, 255, 255, 0.5);
+        --option-pink-white: rgba(255, 234, 240, 0.88);
+        --placeholder-white: rgba(255, 255, 255, 0.54);
+        --champagne-star: rgba(232, 202, 140, 0.88);
+
+        --button-text: #fff8ea;
+        --nav-height: 62px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        min-height: 100%;
+        margin: 0;
+      }
+
+      html {
+        scroll-padding-top: calc(var(--nav-height) + 2rem);
       }
 
       body {
+        position: relative;
+        min-height: 100vh;
         font-family: "Noto Serif TC", serif;
-        background-color: var(--soft-white);
-        color: #4a4a4a;
+        color: rgba(255, 255, 255, 0.96);
+        background: #120101;
+        overflow-x: hidden;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -5;
+        background-image: var(--rsvp-bg);
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        transform: scale(1.03);
+      }
+
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -4;
+        pointer-events: none;
+        background:
+          radial-gradient(
+            ellipse at 50% 34%,
+            rgba(255, 226, 176, 0.095) 0%,
+            rgba(255, 214, 150, 0.043) 22%,
+            rgba(255, 205, 135, 0.014) 42%,
+            transparent 68%
+          ),
+          radial-gradient(
+            circle at center,
+            rgba(120, 20, 20, 0.03) 0%,
+            rgba(0, 0, 0, 0.26) 78%
+          ),
+          rgba(35, 0, 0, 0.08),
+          linear-gradient(
+            90deg,
+            rgba(10, 0, 0, 0.38) 0%,
+            rgba(10, 0, 0, 0.15) 22%,
+            rgba(10, 0, 0, 0.035) 50%,
+            rgba(10, 0, 0, 0.15) 78%,
+            rgba(10, 0, 0, 0.38) 100%
+          ),
+          radial-gradient(
+            circle at 50% 14%,
+            rgba(255, 255, 255, 0.014),
+            transparent 30%
+          ),
+          linear-gradient(
+            180deg,
+            rgba(18, 0, 0, 0.2) 0%,
+            rgba(24, 0, 0, 0.34) 48%,
+            rgba(6, 0, 0, 0.54) 100%
+          );
+      }
+
+      .mobile-bg-mask {
+        display: none;
       }
 
       .serif-en {
-        font-family: "Cormorant Garamond", serif;
+        font-family: "Playfair Display", serif;
       }
 
       .glass-nav {
-        background: rgba(255, 255, 255, 0.8);
-        backdrop-filter: blur(10px);
-        border-bottom: 1px solid rgba(212, 163, 115, 0.1);
+        min-height: var(--nav-height);
+        background: rgba(255, 255, 255, 0.09);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(18px) saturate(150%) contrast(1.06)
+          brightness(1.04);
+        -webkit-backdrop-filter: blur(18px) saturate(150%) contrast(1.06)
+          brightness(1.04);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.17),
+          0 8px 22px rgba(20, 0, 0, 0.16);
+      }
+
+      .nav-logo {
+        color: rgba(255, 255, 255, 0.96);
+        text-shadow:
+          0 1px 10px rgba(0, 0, 0, 0.24),
+          0 0 12px rgba(255, 255, 255, 0.06);
+      }
+
+      .nav-link-disabled {
+        color: rgba(255, 255, 255, 0.38);
+      }
+
+      .nav-link-active {
+        color: rgba(255, 255, 255, 0.94);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.72);
+      }
+
+      .rsvp-page {
+        position: relative;
+        isolation: isolate;
+        min-height: 100vh;
+        padding: calc(var(--nav-height) + 2.25rem) 1.5rem 4rem;
+      }
+
+      .rsvp-page::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: calc(var(--nav-height) + 2rem);
+        width: min(86vw, 48rem);
+        height: min(86vw, 32rem);
+        transform: translateX(-50%);
+        z-index: -1;
+        pointer-events: none;
+        border-radius: 50%;
+        background: radial-gradient(
+          ellipse at center,
+          rgba(222, 178, 96, 0.14) 0%,
+          rgba(222, 178, 96, 0.065) 24%,
+          rgba(222, 178, 96, 0.022) 46%,
+          transparent 74%
+        );
+        filter: blur(20px);
+      }
+
+      .rsvp-card {
+        position: relative;
+        width: min(100%, 38rem);
+        margin: 0 auto;
+        padding: 1.88rem 2.7rem 1.68rem;
+        border-radius: 1.8rem;
+        overflow: hidden;
+
+        background: linear-gradient(
+          160deg,
+          rgba(255, 255, 255, 0.145) 0%,
+          rgba(255, 255, 255, 0.09) 22%,
+          rgba(255, 226, 232, 0.048) 52%,
+          rgba(92, 0, 0, 0.105) 100%
+        );
+
+        border-top: 1px solid rgba(255, 255, 255, 0.64);
+        border-left: 1px solid rgba(255, 255, 255, 0.27);
+        border-right: 1px solid rgba(255, 255, 255, 0.18);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+        outline: none;
+
+        backdrop-filter: blur(20px) saturate(165%) contrast(1.14)
+          brightness(1.06);
+        -webkit-backdrop-filter: blur(20px) saturate(165%) contrast(1.14)
+          brightness(1.06);
+
+        box-shadow:
+          0 20px 58px rgba(18, 0, 0, 0.31),
+          0 -1px 18px rgba(255, 255, 255, 0.12),
+          0 0 30px rgba(255, 220, 228, 0.058),
+          0 0 36px rgba(224, 179, 92, 0.065),
+          0 0 64px rgba(224, 179, 92, 0.026),
+          inset 0 1px 0 rgba(255, 255, 255, 0.34),
+          inset 1px 0 0 rgba(255, 255, 255, 0.085),
+          inset -1px 0 0 rgba(255, 255, 255, 0.045),
+          inset 0 -1px 0 rgba(80, 0, 0, 0.07);
+      }
+
+      .rsvp-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background:
+          radial-gradient(
+            circle at 18% 7%,
+            rgba(255, 255, 255, 0.28) 0%,
+            rgba(255, 255, 255, 0.135) 12%,
+            rgba(255, 255, 255, 0.034) 24%,
+            transparent 42%
+          ),
+          linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.15) 0%,
+            rgba(255, 255, 255, 0.052) 16%,
+            rgba(255, 255, 255, 0.01) 38%,
+            transparent 68%
+          ),
+          radial-gradient(
+            circle at 84% 10%,
+            rgba(255, 235, 240, 0.055),
+            transparent 28%
+          );
+        opacity: 0.7;
+      }
+
+      .rsvp-card::after {
+        content: "";
+        position: absolute;
+        inset: 1px;
+        z-index: 0;
+        pointer-events: none;
+        border-radius: calc(1.8rem - 1px);
+
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.3),
+          inset 0 0 16px rgba(255, 255, 255, 0.095),
+          inset 0 0 26px rgba(255, 255, 255, 0.034),
+          inset 0 2px 8px rgba(255, 255, 255, 0.095),
+          inset 8px 0 14px rgba(255, 255, 255, 0.03),
+          inset -8px 0 14px rgba(255, 255, 255, 0.022),
+          inset 0 -10px 16px rgba(50, 0, 0, 0.08);
+      }
+
+      .rsvp-card-inner {
+        position: relative;
+        z-index: 1;
+      }
+
+      .rsvp-title {
+        color: var(--title-white);
+        text-shadow:
+          0 1px 10px rgba(0, 0, 0, 0.22),
+          0 0 12px rgba(255, 255, 255, 0.05);
+      }
+
+      .rsvp-subtitle {
+        color: rgba(255, 236, 242, 0.7);
+        text-shadow: 0 1px 8px rgba(0, 0, 0, 0.16);
+      }
+
+      .field-label {
+        display: flex;
+        align-items: baseline;
+        gap: 0.4em;
+      }
+
+      .zh-label {
+        color: var(--label-white);
+      }
+
+      .required-mark {
+        color: var(--champagne-star);
+        font-weight: 400;
+        margin-left: -0.22em;
+      }
+
+      .en-label {
+        display: inline-block;
+        font-family: "Playfair Display", serif;
+        font-size: 0.84em;
+        font-weight: 400;
+        letter-spacing: 0.075em;
+        color: var(--label-en-white);
+      }
+
+      label {
+        color: var(--label-white) !important;
+        text-shadow: 0 1px 8px rgba(0, 0, 0, 0.18);
+        font-weight: 400 !important;
+        letter-spacing: 0.04em;
       }
 
       input,
       select,
       textarea {
-        border-radius: 8px !important;
+        border-radius: 13px !important;
         outline: none;
-        transition: all 0.3s;
+        appearance: none;
+        -webkit-appearance: none;
+        transition: all 0.28s ease;
+        color: var(--option-pink-white) !important;
+
+        background-color: rgba(255, 255, 255, 0.064) !important;
+        border: 1px solid rgba(255, 255, 255, 0.21) !important;
+
+        backdrop-filter: blur(9px) saturate(148%) contrast(1.08)
+          brightness(1.035);
+        -webkit-backdrop-filter: blur(9px) saturate(148%) contrast(1.08)
+          brightness(1.035);
+
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.17),
+          inset 0 -1px 0 rgba(255, 255, 255, 0.03),
+          0 4px 12px rgba(20, 0, 0, 0.078);
+
+        font-size: 0.92rem;
+        font-weight: 300;
+        letter-spacing: 0.055em;
+      }
+
+      input,
+      select {
+        min-height: 43px;
+        padding-top: 0.46rem !important;
+        padding-bottom: 0.46rem !important;
+      }
+
+      input {
+        padding-left: 1.08rem !important;
+        padding-right: 1.08rem !important;
+      }
+
+      textarea {
+        resize: none !important;
+        min-height: 78px;
+        padding-top: 0.68rem !important;
+        padding-bottom: 0.68rem !important;
+        padding-left: 1.08rem !important;
+        padding-right: 1.08rem !important;
+        overflow: auto;
+      }
+
+      textarea::-webkit-resizer {
+        display: none;
+      }
+
+      textarea::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+      }
+
+      .name-input::placeholder {
+        color: var(--placeholder-white) !important;
+      }
+
+      input::placeholder,
+      textarea::placeholder {
+        color: rgba(255, 255, 255, 0.54) !important;
+        font-size: 0.88em;
+        letter-spacing: 0.05em;
+      }
+
+      select {
+        color: var(--option-pink-white) !important;
+        padding-left: 1.08rem !important;
+        padding-right: 2.9rem !important;
+
+        background-color: rgba(255, 255, 255, 0.064) !important;
+        background-image:
+          linear-gradient(
+            45deg,
+            transparent 52%,
+            rgba(232, 202, 140, 0.62) 52%
+          ),
+          linear-gradient(
+            135deg,
+            rgba(232, 202, 140, 0.62) 48%,
+            transparent 48%
+          ) !important;
+        background-position:
+          calc(100% - 25px) calc(50% + 1px),
+          calc(100% - 20px) calc(50% + 1px) !important;
+        background-size:
+          5.4px 5.4px,
+          5.4px 5.4px !important;
+        background-repeat: no-repeat !important;
+      }
+
+      select:invalid {
+        color: rgba(255, 255, 255, 0.54) !important;
+        font-size: 0.88rem;
+      }
+
+      option {
+        color: #2f2f35;
+        background: #ffffff;
+        letter-spacing: 0.03em;
       }
 
       input:focus,
       select:focus,
       textarea:focus {
-        box-shadow: 0 0 0 1px var(--morandi-tan);
+        background-color: rgba(255, 255, 255, 0.092) !important;
+        border-color: rgba(255, 255, 255, 0.34) !important;
+        box-shadow:
+          0 0 0 1px rgba(255, 255, 255, 0.15),
+          0 0 12px rgba(255, 230, 236, 0.085),
+          inset 0 1px 0 rgba(255, 255, 255, 0.22);
+      }
+
+      .field-text {
+        font-weight: 300;
+        letter-spacing: 0.055em;
+        color: var(--option-pink-white);
+      }
+
+      .attend-glass-box {
+        background: rgba(255, 255, 255, 0.066);
+        border-top: 1px solid rgba(255, 255, 255, 0.22);
+        border-left: 1px solid rgba(255, 255, 255, 0.13);
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        backdrop-filter: blur(15px) saturate(155%) contrast(1.1)
+          brightness(1.05);
+        -webkit-backdrop-filter: blur(15px) saturate(155%) contrast(1.1)
+          brightness(1.05);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.15),
+          inset 0 0 12px rgba(255, 255, 255, 0.022),
+          0 10px 24px rgba(20, 0, 0, 0.095);
+      }
+
+      .attend-glass-box label {
+        color: rgba(255, 236, 242, 0.8) !important;
+      }
+
+      .submit-btn {
+        position: relative;
+        display: block;
+        width: 220px;
+        max-width: 66%;
+        height: 56px;
+        min-height: 56px;
+        margin: -0.82rem auto 0;
+        padding: 0 1.24rem;
+        border-radius: 999px;
+        overflow: hidden;
+        isolation: isolate;
+
+        color: var(--button-text);
+        font-weight: 600;
+        letter-spacing: 0.18em;
+
+        border: 1px solid rgba(255, 219, 150, 0.74);
+
+        background:
+          radial-gradient(
+            circle at 50% 10%,
+            rgba(255, 225, 165, 0.36) 0%,
+            rgba(210, 145, 78, 0.18) 30%,
+            rgba(125, 36, 32, 0.34) 65%,
+            rgba(70, 0, 0, 0.38) 100%
+          ),
+          linear-gradient(
+            180deg,
+            rgba(255, 235, 190, 0.12) 0%,
+            rgba(130, 28, 28, 0.32) 56%,
+            rgba(60, 0, 0, 0.34) 100%
+          );
+
+        backdrop-filter: blur(14px) saturate(165%) contrast(1.1)
+          brightness(1.08);
+        -webkit-backdrop-filter: blur(14px) saturate(165%) contrast(1.1)
+          brightness(1.08);
+
+        box-shadow:
+          inset 0 1px 0 rgba(255, 238, 205, 0.28),
+          inset 0 -1px 0 rgba(85, 22, 14, 0.42),
+          inset 0 0 20px rgba(232, 190, 115, 0.11),
+          0 8px 20px rgba(35, 0, 0, 0.28),
+          0 0 20px rgba(232, 190, 115, 0.09);
+
+        text-shadow:
+          0 1px 8px rgba(35, 0, 0, 0.52),
+          0 0 8px rgba(255, 232, 190, 0.13);
+
+        transition:
+          transform 0.25s ease,
+          box-shadow 0.25s ease,
+          background 0.25s ease,
+          border-color 0.25s ease,
+          filter 0.25s ease,
+          opacity 0.25s ease;
+      }
+
+      .submit-btn::before {
+        content: "";
+        position: absolute;
+        inset: 1px;
+        z-index: -1;
+        border-radius: inherit;
+        pointer-events: none;
+
+        background: linear-gradient(
+          180deg,
+          rgba(255, 230, 178, 0.13) 0%,
+          rgba(232, 190, 115, 0.055) 30%,
+          rgba(255, 255, 255, 0.012) 64%,
+          rgba(232, 190, 115, 0.045) 100%
+        );
+
+        box-shadow:
+          inset 0 0 0 1px rgba(255, 225, 170, 0.09),
+          inset 0 8px 13px rgba(232, 190, 115, 0.026);
+      }
+
+      .submit-btn::after {
+        content: "";
+        position: absolute;
+        left: 13%;
+        right: 13%;
+        top: 7px;
+        height: 25%;
+        z-index: -1;
+        border-radius: 999px;
+        pointer-events: none;
+
+        background: linear-gradient(
+          180deg,
+          rgba(255, 225, 165, 0.22),
+          rgba(255, 225, 165, 0)
+        );
+
+        opacity: 0.3;
+        filter: blur(1.2px);
+      }
+
+      .submit-btn:hover {
+        transform: translateY(-1px);
+        border-color: rgba(255, 228, 170, 0.82);
+
+        background:
+          radial-gradient(
+            circle at 50% 10%,
+            rgba(255, 231, 176, 0.42) 0%,
+            rgba(214, 150, 82, 0.22) 31%,
+            rgba(130, 38, 33, 0.34) 65%,
+            rgba(68, 0, 0, 0.36) 100%
+          ),
+          linear-gradient(
+            180deg,
+            rgba(255, 240, 205, 0.15) 0%,
+            rgba(135, 31, 29, 0.34) 56%,
+            rgba(60, 0, 0, 0.32) 100%
+          );
+
+        box-shadow:
+          inset 0 1px 0 rgba(255, 238, 205, 0.34),
+          inset 0 -1px 0 rgba(85, 22, 14, 0.38),
+          inset 0 0 24px rgba(232, 190, 115, 0.14),
+          0 8px 22px rgba(35, 0, 0, 0.28),
+          0 0 26px rgba(232, 190, 115, 0.14);
+      }
+
+      .submit-btn:active {
+        transform: translateY(1px);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 238, 205, 0.2),
+          inset 0 0 14px rgba(232, 190, 115, 0.09),
+          0 5px 14px rgba(35, 0, 0, 0.22);
       }
 
       .hidden-section {
@@ -58,276 +597,430 @@
           opacity: 0;
           transform: translateY(5px);
         }
-
         to {
           opacity: 1;
           transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 768px) {
+        :root {
+          --nav-height: 54px;
+        }
+
+        body::before {
+          background-position: center center;
+          background-size: auto 112%;
+          transform: scale(1.02);
+        }
+
+        body::after {
+          background:
+            linear-gradient(
+              180deg,
+              rgba(35, 0, 0, 0.18) 0%,
+              rgba(26, 0, 0, 0.3) 42%,
+              rgba(8, 0, 0, 0.64) 100%
+            ),
+            radial-gradient(
+              ellipse at 50% 32%,
+              rgba(255, 226, 176, 0.075) 0%,
+              rgba(255, 214, 150, 0.035) 24%,
+              rgba(255, 205, 135, 0.01) 44%,
+              transparent 70%
+            ),
+            linear-gradient(
+              90deg,
+              rgba(10, 0, 0, 0.32) 0%,
+              rgba(10, 0, 0, 0.06) 50%,
+              rgba(10, 0, 0, 0.32) 100%
+            );
+        }
+
+        .mobile-bg-mask {
+          display: block;
+          position: fixed;
+          inset: 0;
+          z-index: -2;
+          pointer-events: none;
+          background: linear-gradient(
+            180deg,
+            transparent 0%,
+            rgba(24, 0, 0, 0.12) 38%,
+            rgba(10, 0, 0, 0.42) 100%
+          );
+        }
+
+        .glass-nav {
+          min-height: var(--nav-height);
+          padding: 0.48rem 1.2rem !important;
+        }
+
+        .nav-logo {
+          font-size: 1.1rem !important;
+          letter-spacing: 0.15em !important;
+        }
+
+        .glass-nav .flex {
+          gap: 0.86rem !important;
+          font-size: 0.62rem !important;
+          letter-spacing: 0.12em !important;
+        }
+
+        .glass-nav .flex a:not(.nav-link-active) {
+          opacity: 0.54;
+        }
+
+        .rsvp-page {
+          padding: calc(var(--nav-height) + 2.15rem) 2.35rem 4rem;
+        }
+
+        .rsvp-page::before {
+          width: min(100vw, 34rem);
+          height: min(92vw, 24rem);
+          top: calc(var(--nav-height) + 2.45rem);
+        }
+
+        .rsvp-card {
+          width: 100%;
+          padding: 1.92rem 1.32rem 1.78rem;
+          border-radius: 1.68rem;
+
+          backdrop-filter: blur(20px) saturate(160%) contrast(1.12)
+            brightness(1.08);
+          -webkit-backdrop-filter: blur(20px) saturate(160%) contrast(1.12)
+            brightness(1.08);
+        }
+
+        .rsvp-card::after {
+          border-radius: calc(1.68rem - 1px);
+        }
+
+        input,
+        select {
+          min-height: 50px;
+        }
+
+        textarea {
+          min-height: 96px;
+        }
+
+        .submit-btn {
+          width: 220px;
+          max-width: 72%;
+          height: 55px;
+          min-height: 55px;
+          margin-top: -0.66rem;
+          padding: 0 1.05rem;
+          font-size: 0.9rem;
+          letter-spacing: 0.17em;
+        }
+      }
+
+      @media (max-width: 430px) {
+        .rsvp-page {
+          padding-left: 2.35rem;
+          padding-right: 2.35rem;
+        }
+
+        .rsvp-card {
+          padding-left: 1.2rem;
+          padding-right: 1.2rem;
+        }
+
+        select {
+          background-position:
+            calc(100% - 24px) calc(50% + 1px),
+            calc(100% - 19px) calc(50% + 1px) !important;
+        }
+      }
+
+      @media (max-width: 380px) {
+        .rsvp-page {
+          padding-left: 2rem;
+          padding-right: 2rem;
+        }
+
+        .submit-btn {
+          max-width: 78%;
         }
       }
     </style>
   </head>
 
   <body>
+    <div class="mobile-bg-mask" aria-hidden="true"></div>
+
     <nav
-      class="glass-nav fixed top-0 w-full z-50 px-6 py-4 flex justify-between items-center"
+      class="glass-nav fixed top-0 w-full z-50 px-6 py-3 flex justify-between items-center"
     >
-      <div class="serif-en text-2xl font-medium tracking-widest text-[#800000]">
+      <div class="serif-en text-[1.38rem] font-medium tracking-widest nav-logo">
         C & Z
       </div>
-      <div class="flex space-x-6 text-sm tracking-widest font-medium">
+
+      <div class="flex space-x-5 text-xs tracking-widest font-medium">
         <a
           id="navInvitationLink"
           data-href="../"
           aria-disabled="true"
           title="此連結暫時停用（僅限出席回函頁面）"
           tabindex="-1"
-          class="text-slate-400 opacity-60 cursor-not-allowed"
+          class="nav-link-disabled opacity-60 cursor-not-allowed"
         >
           電子喜帖
         </a>
-        <a href="#" class="text-[#800000] border-b-2 border-[#800000]">
-          出席回函
-        </a>
+
+        <a href="#" class="nav-link-active">出席回函</a>
       </div>
     </nav>
 
-    <div class="pt-32 px-6 pb-20 min-h-[90vh]">
-      <div
-        class="max-w-xl mx-auto bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-gray-100 relative overflow-hidden"
-      >
-        <div class="absolute top-0 left-0 w-full h-2 bg-[#800000]"></div>
-
-        <div class="text-center mb-10 mt-2">
-          <h3 class="text-2xl font-medium mb-2 tracking-widest text-slate-800">
-            出席回函
-          </h3>
-          <p
-            class="serif-en text-sm text-[#8da399] italic uppercase tracking-widest"
-          >
-            RSVP Survey
-          </p>
-        </div>
-
-        <iframe
-          name="hidden_iframe"
-          id="hidden_iframe"
-          style="display: none"
-          onload="handleIframeLoad()"
-        ></iframe>
-
-        <!--
-          正式版：target="hidden_iframe"
-          若需除錯，可暫時改成 target="_blank"，送出後會開啟 Google 表單檢查頁。
-        -->
-        <form
-          action="https://docs.google.com/forms/d/e/1FAIpQLSeXJvhL855NqkjFCsHgeZ5HAyDJXfBw3nwKEOLVuz1dj2XGoA/formResponse"
-          method="post"
-          target="hidden_iframe"
-          id="weddingForm"
-          onsubmit="return prepareSubmit();"
-        >
-          <input type="hidden" name="pageHistory" value="0" />
-
-          <div id="formContent" class="space-y-8">
-            <div>
-              <label
-                class="block text-xs font-bold mb-3 text-slate-400 uppercase tracking-widest"
-              >
-                姓名 NAME *
-              </label>
-              <input
-                type="text"
-                name="entry.162623246"
-                required
-                class="w-full px-5 py-4 bg-[#f9f9f7] border-none shadow-sm"
-                placeholder="請輸入姓名"
-              />
-            </div>
-
-            <div>
-              <label
-                class="block text-xs font-bold mb-3 text-slate-400 uppercase tracking-widest"
-              >
-                與新人的關係 RELATION *
-              </label>
-              <select
-                id="relSelect"
-                name="entry.1835028889"
-                required
-                class="w-full px-5 py-4 bg-[#f9f9f7] border-none shadow-sm"
-              >
-                <option value="" disabled selected>請選擇您的關係...</option>
-                <option value="男方親友">男方親友</option>
-                <option value="女方親友">女方親友</option>
-              </select>
-            </div>
-
-            <div>
-              <label
-                class="block text-xs font-bold mb-3 text-slate-400 uppercase tracking-widest"
-              >
-                認識緣分 HOW WE MET *
-              </label>
-              <select
-                name="entry.2109635832"
-                required
-                class="w-full px-5 py-4 bg-[#f9f9f7] border-none shadow-sm"
-              >
-                <option value="" disabled selected>請選擇認識方式...</option>
-                <option value="親戚">親戚</option>
-                <option value="父母朋友">父母朋友</option>
-                <option value="國中同學">國中同學</option>
-                <option value="高中同學">高中同學</option>
-                <option value="大學同學">大學同學</option>
-                <option value="同事">同事</option>
-                <option value="其他">其他</option>
-              </select>
-            </div>
-
-            <div>
-              <label
-                class="block text-xs font-bold mb-3 text-slate-400 uppercase tracking-widest"
-              >
-                是否能來見證幸福 ATTENDANCE *
-              </label>
-              <select
-                id="vAtt"
-                name="entry.839371500"
-                required
-                onchange="handleLogic()"
-                class="w-full px-5 py-4 bg-[#f9f9f7] border-none shadow-sm"
-              >
-                <option value="" disabled selected>請選擇出席意願...</option>
-                <option value="肚子準備好了！一定準時報到吃喜酒 🍽️">
-                  肚子準備好了！一定準時報到吃喜酒 🍽️
-                </option>
-                <option value="嗚嗚，這天剛好不行，祝你們婚禮順利圓滿 😭">
-                  嗚嗚，這天剛好不行，祝你們婚禮順利圓滿 😭
-                </option>
-              </select>
-            </div>
-
-            <div
-              id="attendBox"
-              class="hidden-section space-y-8 bg-[#fdfdfb] p-6 rounded-2xl border border-gray-50 shadow-inner fade-in"
+    <main class="rsvp-page">
+      <div class="rsvp-card">
+        <div class="rsvp-card-inner">
+          <div class="text-center mb-5 mt-0">
+            <h3
+              class="rsvp-title text-[1.38rem] font-medium mb-1 tracking-[0.14em]"
             >
+              出席回函
+            </h3>
+
+            <p class="rsvp-subtitle serif-en text-[0.8rem] tracking-[0.12em]">
+              Premiere RSVP
+            </p>
+          </div>
+
+          <iframe
+            name="hidden_iframe"
+            id="hidden_iframe"
+            style="display: none"
+            onload="handleIframeLoad()"
+          ></iframe>
+
+          <form
+            action="https://docs.google.com/forms/d/e/1FAIpQLSeXJvhL855NqkjFCsHgeZ5HAyDJXfBw3nwKEOLVuz1dj2XGoA/formResponse"
+            method="post"
+            target="hidden_iframe"
+            id="weddingForm"
+            onsubmit="return prepareSubmit();"
+          >
+            <input type="hidden" name="pageHistory" value="0" />
+
+            <div id="formContent" class="space-y-4">
               <div>
-                <label class="block text-xs font-bold mb-2 text-[#800000]">
-                  攜伴參加 COMPANIONS *
+                <label class="field-label text-xs mb-1.5 tracking-[0.08em]">
+                  <span class="zh-label">姓名</span
+                  ><span class="required-mark">*</span>
+                  <span class="en-label">Name</span>
                 </label>
+
+                <input
+                  type="text"
+                  name="entry.162623246"
+                  required
+                  class="w-full px-5 py-3 name-input field-text"
+                  placeholder="請輸入姓名"
+                />
+              </div>
+
+              <div>
+                <label class="field-label text-xs mb-1.5 tracking-[0.08em]">
+                  <span class="zh-label">與新人的關係</span
+                  ><span class="required-mark">*</span>
+                  <span class="en-label">Relation</span>
+                </label>
+
                 <select
-                  id="vComp"
-                  name="entry.1719850992"
-                  onchange="handleLogic()"
-                  class="w-full px-4 py-3 bg-white border border-gray-100"
+                  id="relSelect"
+                  name="entry.1835028889"
+                  required
+                  class="w-full px-5 py-3 field-text"
                 >
-                  <option value="" disabled selected>請選擇攜伴狀態...</option>
-                  <option value="只有我一個人出席喔！🙌">
-                    只有我一個人出席喔！🙌
-                  </option>
-                  <option value="我要攜伴！">我要攜伴！</option>
+                  <option value="" disabled selected>請選擇您的關係...</option>
+                  <option value="男方親友">男方親友</option>
+                  <option value="女方親友">女方親友</option>
                 </select>
               </div>
 
-              <div id="compDetail" class="hidden-section space-y-4 fade-in">
-                <div class="grid grid-cols-2 gap-4">
-                  <div>
-                    <label
-                      class="block text-[10px] font-bold mb-1 text-slate-400 uppercase"
-                    >
-                      大人人數
-                    </label>
-                    <input
-                      id="adultCount"
-                      type="number"
-                      name="entry.957124862"
-                      class="w-full px-4 py-2 bg-white border border-gray-100"
-                      placeholder="含自己"
-                      min="1"
-                    />
+              <div>
+                <label class="field-label text-xs mb-1.5 tracking-[0.08em]">
+                  <span class="zh-label">與我們的緣分</span
+                  ><span class="required-mark">*</span>
+                  <span class="en-label">How We Met</span>
+                </label>
+
+                <select
+                  name="entry.2109635832"
+                  required
+                  class="w-full px-5 py-3 field-text"
+                >
+                  <option value="" disabled selected>請選擇認識方式...</option>
+                  <option value="親戚">親戚</option>
+                  <option value="父母朋友">父母朋友</option>
+                  <option value="國中同學">國中同學</option>
+                  <option value="高中同學">高中同學</option>
+                  <option value="大學同學">大學同學</option>
+                  <option value="同事">同事</option>
+                  <option value="其他">其他</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="field-label text-xs mb-1.5 tracking-[0.08em]">
+                  <span class="zh-label">是否能來見證幸福</span
+                  ><span class="required-mark">*</span>
+                  <span class="en-label">Attendance</span>
+                </label>
+
+                <select
+                  id="vAtt"
+                  name="entry.839371500"
+                  required
+                  onchange="handleLogic()"
+                  class="w-full px-5 py-3 field-text"
+                >
+                  <option value="" disabled selected>請選擇出席意願...</option>
+                  <option value="肚子準備好了！一定準時報到吃喜酒 🍽️">
+                    肚子準備好了！一定準時報到吃喜酒 🍽️
+                  </option>
+                  <option value="嗚嗚，這天剛好不行，祝你們婚禮順利圓滿 😭">
+                    嗚嗚，這天剛好不行，祝你們婚禮順利圓滿 😭
+                  </option>
+                </select>
+              </div>
+
+              <div
+                id="attendBox"
+                class="hidden-section space-y-4 attend-glass-box p-4 rounded-2xl fade-in"
+              >
+                <div>
+                  <label class="field-label text-xs mb-1.5 tracking-[0.08em]">
+                    <span class="zh-label">攜伴參加</span
+                    ><span class="required-mark">*</span>
+                    <span class="en-label">Companions</span>
+                  </label>
+
+                  <select
+                    id="vComp"
+                    name="entry.1719850992"
+                    onchange="handleLogic()"
+                    class="w-full px-4 py-3 field-text"
+                  >
+                    <option value="" disabled selected>
+                      請選擇攜伴狀態...
+                    </option>
+                    <option value="只有我一個人出席喔！🙌">
+                      只有我一個人出席喔！🙌
+                    </option>
+                    <option value="我要攜伴！">我要攜伴！</option>
+                  </select>
+                </div>
+
+                <div id="compDetail" class="hidden-section space-y-3 fade-in">
+                  <div class="grid grid-cols-2 gap-3">
+                    <div>
+                      <label class="block text-[10px] mb-1 tracking-[0.08em]">
+                        大人人數
+                      </label>
+
+                      <input
+                        id="adultCount"
+                        type="number"
+                        name="entry.957124862"
+                        class="w-full px-4 py-2 field-text"
+                        placeholder="含自己"
+                        min="1"
+                      />
+                    </div>
+
+                    <div>
+                      <label class="block text-[10px] mb-1 tracking-[0.08em]">
+                        小孩人數
+                      </label>
+
+                      <input
+                        type="number"
+                        name="entry.1200218196"
+                        class="w-full px-4 py-2 field-text"
+                        placeholder="0"
+                        min="0"
+                      />
+                    </div>
                   </div>
 
                   <div>
-                    <label
-                      class="block text-[10px] font-bold mb-1 text-slate-400 uppercase"
-                    >
-                      小孩人數
+                    <label class="block text-[10px] mb-1 tracking-[0.08em]">
+                      兒童椅 / 嬰兒車備註
                     </label>
+
                     <input
-                      type="number"
-                      name="entry.1200218196"
-                      class="w-full px-4 py-2 bg-white border border-gray-100"
-                      placeholder="0"
-                      min="0"
+                      type="text"
+                      name="entry.1364757732"
+                      class="w-full px-4 py-2 field-text"
+                      placeholder="例：需 1 張兒童椅"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label
-                    class="block text-[10px] font-bold mb-1 text-slate-400 uppercase"
-                  >
-                    兒童椅/嬰兒車備註
+                  <label class="field-label text-xs mb-1.5 tracking-[0.08em]">
+                    <span class="zh-label">飲食需求</span
+                    ><span class="required-mark">*</span>
+                    <span class="en-label">Dietary</span>
                   </label>
-                  <input
-                    type="text"
-                    name="entry.1364757732"
-                    class="w-full px-4 py-2 bg-white border border-gray-100"
-                    placeholder="例：需1張兒童椅"
-                  />
+
+                  <select
+                    name="entry.66149520"
+                    class="w-full px-4 py-3 field-text"
+                  >
+                    <option value="我要享用一般葷食">我要享用一般葷食</option>
+                    <option value="我需要準備素食餐點">
+                      我需要準備素食餐點
+                    </option>
+                  </select>
                 </div>
               </div>
 
               <div>
-                <label class="block text-xs font-bold mb-2 text-[#800000]">
-                  飲食需求 DIETARY *
+                <label class="field-label text-xs mb-1.5 tracking-[0.08em]">
+                  <span class="zh-label">給我們的祝福</span>
+                  <span class="en-label">Message</span>
                 </label>
-                <select
-                  name="entry.66149520"
-                  class="w-full px-4 py-3 bg-white border border-gray-100"
-                >
-                  <option value="我要享用一般葷食">我要享用一般葷食</option>
-                  <option value="我需要準備素食餐點">我需要準備素食餐點</option>
-                </select>
+
+                <textarea
+                  name="entry.994223227"
+                  rows="3"
+                  class="w-full px-5 py-3 field-text"
+                  placeholder="留下您的祝福..."
+                ></textarea>
               </div>
+
+              <button id="submitBtn" type="submit" class="submit-btn">
+                確認送出
+              </button>
             </div>
 
-            <div>
-              <label
-                class="block text-xs font-bold mb-3 text-slate-400 uppercase tracking-widest"
+            <div id="successMsg" class="hidden-section text-center py-10">
+              <span class="text-5xl block mb-6">✨</span>
+
+              <h4
+                class="text-xl font-medium mb-4 tracking-[0.12em]"
+                style="color: rgba(255, 255, 255, 0.98)"
               >
-                給我們的祝福 MESSAGE
-              </label>
-              <textarea
-                name="entry.994223227"
-                rows="3"
-                class="w-full px-5 py-4 bg-[#f9f9f7] border-none shadow-sm"
-                placeholder="留下您的祝福..."
-              ></textarea>
+                回傳成功！
+              </h4>
+
+              <p
+                class="text-sm leading-relaxed mb-10"
+                style="color: rgba(255, 236, 242, 0.74)"
+              >
+                昶毓 & 姿穎 已收到您的祝福。<br />
+                期待與您分享喜悅！
+              </p>
             </div>
-
-            <button
-              id="submitBtn"
-              type="submit"
-              class="w-full bg-[#800000] text-white py-5 rounded-2xl font-bold tracking-[0.3em] hover:shadow-xl transition-all shadow-md active:scale-95"
-            >
-              確認送出 SUBMIT
-            </button>
-          </div>
-
-          <div id="successMsg" class="hidden-section text-center py-10">
-            <span class="text-5xl block mb-6">✨</span>
-            <h4 class="text-xl font-medium mb-4 text-slate-800 tracking-widest">
-              回傳成功！
-            </h4>
-            <p class="text-slate-500 text-sm leading-relaxed mb-10">
-              昶毓 & 姿穎 已收到您的祝福。<br />期待與您分享喜悅！
-            </p>
-            <!-- 已移除：回到電子喜帖首頁按鈕（需求：送出後不顯示） -->
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
-    </div>
+    </main>
 
     <script>
       let submitted = false;
@@ -346,6 +1039,7 @@
       function handleLogic() {
         const attEl = document.getElementById("vAtt");
         const compEl = document.getElementById("vComp");
+
         const att = attEl ? attEl.value : "";
         const comp = compEl ? compEl.value : "";
 
@@ -427,18 +1121,26 @@
         document.getElementById("formContent").style.display = "none";
         document.getElementById("successMsg").style.display = "block";
 
-        // 送出成功後恢復導航列「電子喜帖」連結與樣式
         const navLink = document.getElementById("navInvitationLink");
+
         if (navLink) {
           const href =
             navLink.dataset && navLink.dataset.href
               ? navLink.dataset.href
               : "../";
+
           navLink.setAttribute("href", href);
           navLink.removeAttribute("aria-disabled");
           navLink.removeAttribute("tabindex");
-          navLink.classList.remove("opacity-60", "cursor-not-allowed");
-          navLink.classList.add("hover:text-[#800000]", "transition");
+
+          navLink.classList.remove(
+            "opacity-60",
+            "cursor-not-allowed",
+            "nav-link-disabled",
+          );
+
+          navLink.classList.add("transition");
+          navLink.style.color = "rgba(255, 255, 255, 0.76)";
         }
 
         window.scrollTo({ top: 0, behavior: "smooth" });
