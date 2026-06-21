@@ -1,270 +1,259 @@
-<!-- <!doctype html>
-<html lang="zh-TW">
+<!doctype html>
+<html lang="zh-Hant">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>昶毓 & 姿穎 | 柒天柒年 婚禮邀請</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Noto+Serif+TC:wght@300;500;700&display=swap"
-      rel="stylesheet"
-    />
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Wedding Invitation</title>
+
     <style>
-      :root {
-        --morandi-tan: #7b112b;
-        --soft-white: #fafaf8;
+      * {
+        box-sizing: border-box;
       }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        background: #070000;
+      }
+
       body {
         font-family: "Noto Serif TC", serif;
-        background-color: var(--soft-white);
-        color: #4a4a4a;
-        scroll-behavior: smooth;
       }
-      .serif-en {
-        font-family: "Cormorant Garamond", serif;
+
+      .invitation {
+        width: 100%;
+        max-width: 768px;
+        margin: 0 auto;
+        background: #070000;
       }
-      .glass-nav {
-        background: rgba(255, 255, 255, 0.8);
-        backdrop-filter: blur(10px);
-        border-bottom: 1px solid rgba(212, 163, 115, 0.1);
+
+      .invitation img {
+        display: block;
+        width: 100%;
+        height: auto;
+        margin: 0;
+        padding: 0;
+        border: 0;
       }
-      .no-wrap {
-        white-space: nowrap;
-        word-break: keep-all;
+
+      .rsvp-link {
+        display: block;
+        position: relative;
       }
-      .countdown-card {
-        background: rgba(255, 255, 255, 0.95);
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+      .hero {
+        position: relative;
+      }
+
+      .hero .scroll-arrow {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 20px;
+        width: 18px; /* 改這個值來調整大小 */
+        height: auto;
+        display: block;
+        pointer-events: none;
+        opacity: 1;
+        filter: drop-shadow(0 0 6px rgba(255, 230, 230, 0.9));
+        animation: arrow-bob 0.9s ease-in-out infinite;
+      }
+
+      @keyframes arrow-bob {
+        0% {
+          transform: translateX(-50%) translateY(0);
+          opacity: 1;
+        }
+        50% {
+          transform: translateX(-50%) translateY(6px);
+          opacity: 0.9;
+        }
+        100% {
+          transform: translateX(-50%) translateY(0);
+          opacity: 1;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .scroll-arrow {
+          animation: none;
+        }
+      }
+      /* Map modal styles */
+      .clickable {
+        cursor: pointer;
+      }
+      .map-modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+      }
+      .map-modal.open {
+        display: block;
+      }
+      .map-modal-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.6);
+      }
+      .map-modal-content {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: min(92vw, 900px);
+        height: min(80vh, 600px);
+        background: transparent;
+        display: flex;
+        align-items: stretch;
+        justify-content: center;
+        outline: none;
+      }
+      .map-wrapper {
+        width: 100%;
+        height: 100%;
         border-radius: 12px;
+        overflow: hidden;
       }
-      .vertical-line {
-        width: 1px;
-        height: 24px;
-        background-color: #eaeaea;
+      .map-wrapper iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        display: block;
       }
-      .rotating {
-        animation: rotate 3s linear infinite;
-      }
-      @keyframes rotate {
-        from {
-          transform: rotate(0deg);
-        }
-        to {
-          transform: rotate(360deg);
-        }
+      .map-close {
+        position: absolute;
+        right: calc(50% - (min(92vw, 900px) / 2) + 12px);
+        top: calc(50% - (min(80vh, 600px) / 2) + 12px);
+        background: rgba(0, 0, 0, 0.6);
+        color: #fff;
+        border: none;
+        padding: 6px 8px;
+        border-radius: 6px;
+        cursor: pointer;
+        z-index: 10001;
       }
     </style>
   </head>
+
   <body>
-    <audio id="bgMusic" loop>
-      <source
-        src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
-        type="audio/mpeg"
+    <main class="invitation">
+      <div class="hero">
+        <img src="image/invatation_1.png" alt="Wedding Invitation Cover" />
+        <img
+          class="scroll-arrow"
+          src="image/invatation-08.png"
+          alt="向下箭頭"
+        />
+      </div>
+
+      <img src="image/invatation_2.png" alt="Wedding Invitation Main" />
+
+      <img src="image/invatation_3.png" alt="Dress Code" />
+
+      <img src="image/invatation_4.png" alt="Schedule" />
+
+      <img
+        id="venue-img"
+        class="clickable"
+        src="image/invatation_5.png"
+        alt="Venue"
       />
-    </audio>
-    <button
-      onclick="toggleMusic()"
-      id="musicBtn"
-      class="fixed bottom-8 right-8 z-50 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center border border-[#7b112b]/30"
-    >
-      <span id="musicIcon" class="text-[#7b112b] text-xl">♫</span>
-    </button>
-    <nav
-      class="glass-nav fixed top-0 w-full z-50 px-6 py-4 flex justify-between items-center"
-    >
-      <div class="serif-en text-2xl font-medium tracking-widest text-[#7b112b]">
-        C & Z
-      </div>
-      <div class="flex space-x-6 text-sm tracking-widest font-medium">
-        <a href="#" class="text-[#7b112b] border-b-2 border-[#7b112b]"
-          >電子喜帖</a
-        >
-        <a href="rsvp/" class="text-slate-400 hover:text-[#7b112b] transition"
-          >出席回函</a
-        >
-      </div>
-    </nav>
-    <section
-      class="h-[90vh] flex items-center justify-center text-center bg-cover bg-center relative"
-      style="
-        background-image:
-          linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)),
-          url(&quot;https://i.postimg.cc/hGkkYy50/img-463.jpg&quot;);
-      "
-    >
-      <div class="text-white px-4">
-        <h2 class="serif-en text-2xl italic mb-3 tracking-[0.2em]">
-          Seven Days, Seven Years
-        </h2>
-        <h1 class="text-5xl md:text-7xl font-medium mb-8 tracking-[0.3em]">
-          柒天柒年
-        </h1>
-        <p class="text-lg md:text-xl tracking-[0.4em] font-light">
-          黃昶毓 & 賴姿穎
-        </p>
-      </div>
-    </section>
-    <section class="py-20 px-6 bg-[#fafaf8] text-center">
-      <h3 class="serif-en text-[#7b112b] text-xl mb-10 tracking-[0.2em] italic">
-        Counting Down to Our Big Day
-      </h3>
-      <div
-        id="countdown"
-        class="flex justify-center items-center space-x-3 md:space-x-8"
-      >
+
+      <a class="rsvp-link" href="rsvp/index.html">
+        <img src="image/invatation_6.png" alt="填寫出席回函" />
+      </a>
+      <!-- Map modal -->
+      <div id="map-modal" class="map-modal" aria-hidden="true">
+        <div class="map-modal-backdrop" data-close></div>
         <div
-          class="countdown-card p-5 md:p-8 w-24 md:w-32 flex flex-col items-center"
+          class="map-modal-content"
+          role="dialog"
+          aria-modal="true"
+          aria-label="地圖預覽"
         >
-          <span id="days" class="serif-en text-3xl md:text-5xl font-light"
-            >00</span
-          >
-          <div class="vertical-line my-3"></div>
-          <span class="text-[10px] tracking-widest text-slate-400 uppercase"
-            >Days</span
-          >
-        </div>
-        <div
-          class="countdown-card p-5 md:p-8 w-24 md:w-32 flex flex-col items-center"
-        >
-          <span id="hours" class="serif-en text-3xl md:text-5xl font-light"
-            >00</span
-          >
-          <div class="vertical-line my-3"></div>
-          <span class="text-[10px] tracking-widest text-slate-400 uppercase"
-            >Hours</span
-          >
-        </div>
-        <div
-          class="countdown-card p-5 md:p-8 w-24 md:w-32 flex flex-col items-center"
-        >
-          <span id="minutes" class="serif-en text-3xl md:text-5xl font-light"
-            >00</span
-          >
-          <div class="vertical-line my-3"></div>
-          <span class="text-[10px] tracking-widest text-slate-400 uppercase"
-            >Mins</span
-          >
-        </div>
-      </div>
-    </section>
-    <section class="py-24 px-8 bg-white text-center">
-      <div class="max-w-xl mx-auto space-y-8">
-        <h3
-          class="serif-en text-[#7b112b] text-xl tracking-[0.3em] uppercase italic"
-        >
-          Our Story
-        </h3>
-        <div class="h-[1px] w-12 bg-[#7b112b] mx-auto"></div>
-        <div class="text-slate-600 leading-[2.2] tracking-widest font-light">
-          那天，是我們相識的第七天。<br />
-          沒想到，這一眼便是七年的陪伴。<br />
-          從青澀的相遇，到日常的瑣碎，<br />
-          時光將愛凝煉成最溫暖的模樣。<br /><br />
-          這份「柒天柒年」的約定，<br />
-          希望能邀您一同見證，未來的無數個七年。
-        </div>
-      </div>
-    </section>
-    <section class="py-24 px-6 max-w-4xl mx-auto border-t border-gray-50">
-      <div class="text-center mb-12">
-        <h3 class="text-2xl font-medium tracking-[0.2em] mb-4 text-slate-800">
-          婚禮詳情
-        </h3>
-        <p class="text-slate-500 text-sm">
-          2026.07.16 THU | 12:00 入席 12:30 開席
-        </p>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
-        <div
-          class="p-8 bg-white rounded-3xl border border-gray-100 shadow-sm space-y-6"
-        >
-          <div>
-            <p class="font-bold text-slate-800 no-wrap text-lg">
-              台中新天地崇德店 5樓凱薩廳
-            </p>
-            <p class="text-sm text-slate-500 mt-2">
-              台中市北屯區崇德五路345號1樓
-            </p>
-          </div>
-          <button
-            onclick="toggleAccordion()"
-            class="text-[#8da399] text-sm font-medium"
-          >
-            交通指引 ▼
-          </button>
-          <div
-            id="acc-content"
-            class="max-h-0 overflow-hidden transition-all duration-300 text-xs text-slate-500 space-y-2"
-          >
-            <p>
-              🚇 捷運 <span class="no-wrap">文心崇德站</span> 步行約 10 分鐘。
-            </p>
+          <button class="map-close" aria-label="關閉地圖">✕</button>
+          <div class="map-wrapper" id="map-wrapper">
+            <!-- iframe 會在開啟時建立以節省資源 -->
           </div>
         </div>
-        <div class="rounded-3xl overflow-hidden shadow-lg h-64">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3639.7948249067013!2d120.6843256!3d24.1789274!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346917c15c7763e9%3A0xa1cc7f52b77c3f88!2z5paw5aSp5Zyw5bSH5b635peX6Imm5bqX!5e0!3m2!1szh-TW!2stw!4v1781450168294!5m2!1szh-TW!2stw"
-            width="600"
-            height="450"
-            style="border: 0"
-            allowfullscreen=""
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-          ></iframe>
-        </div>
       </div>
-      <div class="text-center mt-20">
-        <a
-          href="rsvp/"
-          class="inline-block bg-[#7b112b] text-white px-12 py-4 rounded-full shadow-lg hover:bg-[#c29161] transition tracking-widest"
-          >前往填寫出席回函</a
-        >
-      </div>
-    </section>
-    <footer
-      class="py-12 text-center text-xs text-slate-300 tracking-[0.4em] uppercase"
-    >
-      © 2026 Chang Yu & Zi Ying
-    </footer>
+    </main>
     <script>
-      const weddingDate = new Date("July 16, 2026 12:30:00").getTime();
-      function updateCountdown() {
-        const now = new Date().getTime();
-        const gap = weddingDate - now;
-        const day = 1000 * 60 * 60 * 24,
-          hour = 1000 * 60 * 60,
-          minute = 1000 * 60;
-        document.getElementById("days").innerText = Math.floor(gap / day)
-          .toString()
-          .padStart(2, "0");
-        document.getElementById("hours").innerText = Math.floor(
-          (gap % day) / hour,
-        )
-          .toString()
-          .padStart(2, "0");
-        document.getElementById("minutes").innerText = Math.floor(
-          (gap % hour) / minute,
-        )
-          .toString()
-          .padStart(2, "0");
-      }
-      setInterval(updateCountdown, 1000);
-      function toggleMusic() {
-        const m = document.getElementById("bgMusic"),
-          btn = document.getElementById("musicBtn");
-        if (m.paused) {
-          m.play();
-          btn.classList.add("rotating");
-        } else {
-          m.pause();
-          btn.classList.remove("rotating");
+      (function () {
+        const venue = document.getElementById("venue-img");
+        const modal = document.getElementById("map-modal");
+        const wrapper = document.getElementById("map-wrapper");
+        const closeBtn = modal ? modal.querySelector(".map-close") : null;
+        const backdrop = modal ? modal.querySelector("[data-close]") : null;
+        const embedSrc =
+          "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d29122.581635626124!2d120.67236692875763!3d24.160412817113123!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346917c15c7763e9%3A0xa1cc7f52b77c3f88!2z5paw5aSp5Zyw5bSH5b635peX6Imm5bqX!5e0!3m2!1szh-TW!2stw!4v1782063568869!5m2!1szh-TW!2stw";
+        const mapsLink = "https://maps.app.goo.gl/KCoXPZVDFskyLLw3A";
+
+        function openModal() {
+          if (!modal) return;
+          if (!wrapper.querySelector("iframe")) {
+            const ifr = document.createElement("iframe");
+            ifr.src = embedSrc;
+            ifr.loading = "lazy";
+            ifr.setAttribute("referrerpolicy", "no-referrer-when-downgrade");
+            wrapper.appendChild(ifr);
+          }
+          modal.classList.add("open");
+          modal.setAttribute("aria-hidden", "false");
+          document.body.style.overflow = "hidden";
         }
-      }
-      function toggleAccordion() {
-        const c = document.getElementById("acc-content");
-        c.style.maxHeight =
-          c.style.maxHeight === "0px" || !c.style.maxHeight ? "100px" : "0px";
-      }
+
+        function closeModal() {
+          if (!modal) return;
+          modal.classList.remove("open");
+          modal.setAttribute("aria-hidden", "true");
+          document.body.style.overflow = "";
+        }
+
+        function openInNewTabWithEmbed() {
+          // Create a temporary link with target=_blank to reliably open a new tab without navigating current page
+          try {
+            const a = document.createElement("a");
+            a.href = mapsLink;
+            a.target = "_blank";
+            a.rel = "noopener noreferrer";
+            a.style.display = "none";
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+          } catch (e) {
+            // fallback: navigate current tab
+            window.location.href = mapsLink;
+          }
+        }
+
+        if (venue) {
+          // make focusable for keyboard
+          if (!venue.hasAttribute("tabindex"))
+            venue.setAttribute("tabindex", "0");
+          console.log("venue element found, attaching click handler");
+          venue.addEventListener("click", function (e) {
+            e.preventDefault();
+            console.log("venue clicked");
+            openInNewTabWithEmbed();
+          });
+          venue.addEventListener("keydown", function (e) {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              openInNewTabWithEmbed();
+            }
+          });
+        }
+
+        if (closeBtn) closeBtn.addEventListener("click", closeModal);
+        if (backdrop) backdrop.addEventListener("click", closeModal);
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape") closeModal();
+        });
+      })();
     </script>
   </body>
-</html> -->
+</html>
