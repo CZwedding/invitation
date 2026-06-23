@@ -24,7 +24,6 @@
         --champagne-star: rgba(232, 202, 140, 0.88);
 
         --button-text: #fff8ea;
-        --nav-height: 62px;
       }
 
       * {
@@ -35,10 +34,6 @@
       body {
         min-height: 100%;
         margin: 0;
-      }
-
-      html {
-        scroll-padding-top: calc(var(--nav-height) + 2rem);
       }
 
       body {
@@ -107,51 +102,26 @@
         display: none;
       }
 
+      .desktop-notice {
+        display: none;
+      }
+
       .serif-en {
         font-family: "Playfair Display", serif;
-      }
-
-      .glass-nav {
-        min-height: var(--nav-height);
-        background: rgba(255, 255, 255, 0.09);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-        backdrop-filter: blur(18px) saturate(150%) contrast(1.06)
-          brightness(1.04);
-        -webkit-backdrop-filter: blur(18px) saturate(150%) contrast(1.06)
-          brightness(1.04);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.17),
-          0 8px 22px rgba(20, 0, 0, 0.16);
-      }
-
-      .nav-logo {
-        color: rgba(255, 255, 255, 0.96);
-        text-shadow:
-          0 1px 10px rgba(0, 0, 0, 0.24),
-          0 0 12px rgba(255, 255, 255, 0.06);
-      }
-
-      .nav-link-disabled {
-        color: rgba(255, 255, 255, 0.38);
-      }
-
-      .nav-link-active {
-        color: rgba(255, 255, 255, 0.94);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.72);
       }
 
       .rsvp-page {
         position: relative;
         isolation: isolate;
         min-height: 100vh;
-        padding: calc(var(--nav-height) + 2.25rem) 1.5rem 4rem;
+        padding: 2.25rem 1.5rem 4rem;
       }
 
       .rsvp-page::before {
         content: "";
         position: absolute;
         left: 50%;
-        top: calc(var(--nav-height) + 2rem);
+        top: 2rem;
         width: min(86vw, 48rem);
         height: min(86vw, 32rem);
         transform: translateX(-50%);
@@ -603,11 +573,7 @@
         }
       }
 
-      @media (max-width: 768px) {
-        :root {
-          --nav-height: 54px;
-        }
-
+      @media (max-width: 767px) {
         body::before {
           background-position: center center;
           background-size: auto 112%;
@@ -651,34 +617,14 @@
           );
         }
 
-        .glass-nav {
-          min-height: var(--nav-height);
-          padding: 0.48rem 1.2rem !important;
-        }
-
-        .nav-logo {
-          font-size: 1.1rem !important;
-          letter-spacing: 0.15em !important;
-        }
-
-        .glass-nav .flex {
-          gap: 0.86rem !important;
-          font-size: 0.62rem !important;
-          letter-spacing: 0.12em !important;
-        }
-
-        .glass-nav .flex a:not(.nav-link-active) {
-          opacity: 0.54;
-        }
-
         .rsvp-page {
-          padding: calc(var(--nav-height) + 2.15rem) 2.35rem 4rem;
+          padding: 2.15rem 2.35rem 4rem;
         }
 
         .rsvp-page::before {
           width: min(100vw, 34rem);
           height: min(92vw, 24rem);
-          top: calc(var(--nav-height) + 2.45rem);
+          top: 2.45rem;
         }
 
         .rsvp-card {
@@ -717,6 +663,68 @@
         }
       }
 
+      @media (min-width: 768px) {
+        html,
+        body {
+          height: 100%;
+          overflow: hidden;
+        }
+
+        .desktop-notice {
+          position: fixed;
+          inset: 0;
+          z-index: 20000;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 2rem;
+          background:
+            radial-gradient(
+              circle at 50% 38%,
+              rgba(155, 29, 35, 0.42),
+              transparent 48%
+            ),
+            linear-gradient(145deg, #650b11 0%, #430307 55%, #56070c 100%);
+        }
+
+        .desktop-notice-card {
+          width: min(90vw, 420px);
+          padding: 2.5rem 2rem 2.25rem;
+          color: #f7ead4;
+          text-align: center;
+          background: linear-gradient(145deg, #79171d, #4a0509);
+          border: 1px solid rgba(225, 186, 119, 0.72);
+          border-radius: 24px;
+          box-shadow: 0 24px 70px rgba(32, 0, 0, 0.42);
+        }
+
+        .desktop-notice-card h1 {
+          margin: 0 0 0.7rem;
+          font-size: 1.35rem;
+          font-weight: 500;
+          letter-spacing: 0.12em;
+        }
+
+        .desktop-notice-card p {
+          margin: 0 0 1.5rem;
+          color: rgba(255, 244, 225, 0.74);
+          font-size: 0.92rem;
+          line-height: 1.8;
+          letter-spacing: 0.06em;
+        }
+
+        .desktop-notice-card img {
+          display: block;
+          width: 200px;
+          height: 200px;
+          margin: 0 auto;
+          padding: 10px;
+          object-fit: contain;
+          background: #fff;
+          border-radius: 12px;
+        }
+      }
+
       @media (max-width: 430px) {
         .rsvp-page {
           padding-left: 2.35rem;
@@ -751,21 +759,16 @@
   <body>
     <div class="mobile-bg-mask" aria-hidden="true"></div>
 
-    <nav
-      class="glass-nav fixed top-0 w-full z-50 px-6 py-3 flex justify-between items-center"
-    >
-      <div class="serif-en text-[1.38rem] font-medium tracking-widest nav-logo">
-        C & Z
+    <aside class="desktop-notice" aria-label="建議使用手機瀏覽">
+      <div class="desktop-notice-card">
+        <h1>請使用手機開啟</h1>
+        <p>為呈現最佳填寫尺寸，請使用手機掃描 QR Code 開啟出席回函。</p>
+        <img
+          src="../image/rsvp_QR.png?v=20260624"
+          alt="出席回函 QR Code"
+        />
       </div>
-
-      <div class="flex space-x-5 text-xs tracking-widest font-medium">
-        <a id="navInvitationLink" href="../" title="電子喜帖" class="nav-link">
-          電子喜帖
-        </a>
-
-        <a href="#" class="nav-link-active">出席回函</a>
-      </div>
-    </nav>
+    </aside>
 
     <main class="rsvp-page">
       <div class="rsvp-card">
@@ -1128,28 +1131,6 @@
       function showSuccess() {
         document.getElementById("formContent").style.display = "none";
         document.getElementById("successMsg").style.display = "block";
-
-        const navLink = document.getElementById("navInvitationLink");
-
-        if (navLink) {
-          const href =
-            navLink.dataset && navLink.dataset.href
-              ? navLink.dataset.href
-              : "../";
-
-          navLink.setAttribute("href", href);
-          navLink.removeAttribute("aria-disabled");
-          navLink.removeAttribute("tabindex");
-
-          navLink.classList.remove(
-            "opacity-60",
-            "cursor-not-allowed",
-            "nav-link-disabled",
-          );
-
-          navLink.classList.add("transition");
-          navLink.style.color = "rgba(255, 255, 255, 0.76)";
-        }
 
         window.scrollTo({ top: 0, behavior: "smooth" });
       }

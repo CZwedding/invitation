@@ -13,13 +13,82 @@
       html,
       body {
         margin: 0;
-        padding: 0;
         width: 100%;
         background: #070000;
       }
 
+      html {
+        scroll-snap-type: y proximity;
+      }
+
       body {
         font-family: "Noto Serif TC", serif;
+      }
+
+      .desktop-notice {
+        display: none;
+      }
+
+      @media (min-width: 768px) {
+        html,
+        body {
+          height: 100%;
+          overflow: hidden;
+        }
+
+        .desktop-notice {
+          position: fixed;
+          inset: 0;
+          z-index: 20000;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 2rem;
+          background:
+            radial-gradient(
+              circle at 50% 38%,
+              rgba(155, 29, 35, 0.42),
+              transparent 48%
+            ),
+            linear-gradient(145deg, #650b11 0%, #430307 55%, #56070c 100%);
+        }
+
+        .desktop-notice-card {
+          width: min(90vw, 420px);
+          padding: 2.5rem 2rem 2.25rem;
+          color: #f7ead4;
+          text-align: center;
+          background: linear-gradient(145deg, #79171d, #4a0509);
+          border: 1px solid rgba(225, 186, 119, 0.72);
+          border-radius: 24px;
+          box-shadow: 0 24px 70px rgba(32, 0, 0, 0.42);
+        }
+
+        .desktop-notice-card h1 {
+          margin: 0 0 0.7rem;
+          font-size: 1.35rem;
+          font-weight: 500;
+          letter-spacing: 0.12em;
+        }
+
+        .desktop-notice-card p {
+          margin: 0 0 1.5rem;
+          color: rgba(255, 244, 225, 0.74);
+          font-size: 0.92rem;
+          line-height: 1.8;
+          letter-spacing: 0.06em;
+        }
+
+        .desktop-notice-card img {
+          display: block;
+          width: 200px;
+          height: 200px;
+          margin: 0 auto;
+          padding: 10px;
+          object-fit: contain;
+          background: #fff;
+          border-radius: 12px;
+        }
       }
 
       .invitation {
@@ -33,15 +102,10 @@
         display: block;
         width: 100%;
         height: auto;
-        margin: 0;
-        padding: 0;
         border: 0;
       }
 
-      .rsvp-link {
-        display: block;
-        position: relative;
-      }
+      /* 首頁 */
       .hero {
         position: relative;
       }
@@ -49,55 +113,306 @@
       .hero .scroll-arrow {
         position: absolute;
         left: 50%;
-        transform: translateX(-50%);
-        bottom: 20px;
-        width: 18px; /* 改這個值來調整大小 */
+        bottom: clamp(12px, 3.1vw, 24px);
+        width: clamp(11px, 2.86vw, 22px);
         height: auto;
-        display: block;
+        transform: translateX(-50%);
         pointer-events: none;
-        opacity: 1;
         filter: drop-shadow(0 0 6px rgba(255, 230, 230, 0.9));
-        animation: arrow-bob 0.9s ease-in-out infinite;
+        animation: arrow-bob 1.8s ease-in-out infinite;
       }
 
       @keyframes arrow-bob {
-        0% {
-          transform: translateX(-50%) translateY(0);
-          opacity: 1;
-        }
-        50% {
-          transform: translateX(-50%) translateY(6px);
-          opacity: 0.9;
-        }
+        0%,
         100% {
           transform: translateX(-50%) translateY(0);
           opacity: 1;
         }
-      }
 
-      @media (prefers-reduced-motion: reduce) {
-        .scroll-arrow {
-          animation: none;
+        50% {
+          transform: translateX(-50%) translateY(6px);
+          opacity: 0.9;
         }
       }
-      /* Map modal styles */
+
+      @keyframes arrow-nudge-right {
+        0%,
+        100% {
+          transform: translateY(-50%) translateX(0);
+          opacity: 1;
+        }
+
+        50% {
+          transform: translateY(-50%) translateX(6px);
+          opacity: 0.9;
+        }
+      }
+
+      /* 定格滾動區域 */
+      .curtain-story {
+        position: relative;
+        height: calc(
+          320svh +
+            var(--curtain-frame-height, max(100svh, min(141.5vw, 1086.72px)))
+        );
+        background: #3b0101;
+      }
+
+      .curtain-frame {
+        position: sticky;
+        top: 0;
+        height: var(
+          --curtain-frame-height,
+          max(100svh, min(141.5vw, 1086.72px))
+        );
+        display: grid;
+        grid-template-columns: 100%;
+        grid-auto-rows: max-content;
+        align-content: start;
+        place-items: start center;
+        overflow: hidden;
+        isolation: isolate;
+        background: #300000;
+      }
+
+      .curtain-art {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 1000 / 1415;
+        overflow: hidden;
+        background: #5e0000;
+      }
+
+      .curtain-art > img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: fill;
+        pointer-events: none;
+        user-select: none;
+      }
+
+      /* 初始紅布 */
+      .curtain-base {
+        z-index: 1;
+      }
+
+      /* 愛心燈 */
+      .heart-lights {
+        z-index: 2;
+        inset: 7.5% auto auto -3.6% !important;
+        width: 107.2% !important;
+        height: auto !important;
+        opacity: var(--lights-opacity, 0);
+        mix-blend-mode: soft-light;
+        filter: none;
+        will-change: opacity;
+      }
+
+      /* 照片與文字 */
+      .curtain-photo,
+      .curtain-copy,
+      .curtain-final {
+        z-index: 3;
+        will-change: opacity, transform;
+      }
+
+      .curtain-photo {
+        inset: 21.0601% auto auto 15.2% !important;
+        width: 69.8% !important;
+        height: auto !important;
+        opacity: var(--photo-opacity, 0);
+        transform: scale(var(--photo-scale, 1.06));
+        transform-origin: center;
+      }
+
+      .wedding-copy {
+        z-index: 4 !important;
+        inset: 11.8728% auto auto 21.1% !important;
+        width: 57% !important;
+        height: auto !important;
+        opacity: var(--wedding-copy-opacity, 0);
+      }
+
+      .name-copy {
+        z-index: 4 !important;
+        inset: 66.8551% auto auto 7.6% !important;
+        width: 86.7% !important;
+        height: auto !important;
+        opacity: var(--name-copy-opacity, 0);
+      }
+
+      /* 最後完整顯示 invatation_2 */
+      .curtain-final {
+        z-index: 5;
+        opacity: var(--final-opacity, 0);
+      }
+
+      /* 第三段：Dress code 內容原地淡入 */
+      .dress-story {
+        position: relative;
+        height: calc(
+          170svh + var(--dress-frame-height, max(100svh, min(104.7vw, 804.1px)))
+        );
+        background: #350504;
+      }
+
+      .dress-frame {
+        position: sticky;
+        top: 0;
+        height: var(--dress-frame-height, max(100svh, min(104.7vw, 804.1px)));
+        display: grid;
+        grid-template-columns: 100%;
+        grid-auto-rows: max-content;
+        align-content: start;
+        place-items: start center;
+        overflow: hidden;
+        isolation: isolate;
+        background: #300000;
+      }
+
+      .dress-art {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 1000 / 1047;
+        overflow: hidden;
+        background: #300000;
+      }
+
+      .dress-art > img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: fill;
+        pointer-events: none;
+        user-select: none;
+      }
+
+      .dress-base {
+        z-index: 1;
+      }
+
+      .dress-heart-lights {
+        z-index: 2;
+        inset: 10.1% auto auto -3.6% !important;
+        width: 107.2% !important;
+        height: auto !important;
+        opacity: var(--dress-lights-opacity, 0);
+        mix-blend-mode: soft-light;
+        filter: none;
+        will-change: opacity;
+      }
+
+      .coming-layer {
+        z-index: 3;
+        inset: 36.0076% auto auto 22.4% !important;
+        width: 55.2% !important;
+        height: auto !important;
+        opacity: var(--coming-opacity, 0);
+        will-change: opacity;
+      }
+
+      .dress-final {
+        z-index: 4;
+        opacity: var(--dress-final-opacity, 0);
+        will-change: opacity;
+      }
+
+      .transition-snap {
+        margin: 0;
+        padding: 0;
+        scroll-snap-stop: normal;
+      }
+
+      .transition-snap.snap-ready {
+        scroll-snap-align: start;
+      }
+
+      .static-section {
+        position: relative;
+        width: 100%;
+        line-height: 0;
+      }
+
+      .details-strip {
+        position: relative;
+      }
+
+      /* RSVP */
+      .rsvp-link {
+        display: block;
+        position: relative;
+        cursor: pointer;
+      }
+
+      .rsvp-button-overlay {
+        position: absolute;
+        top: 17.4%;
+        left: 24.15%;
+        width: 51.7% !important;
+        height: auto !important;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 180ms ease;
+        will-change: opacity;
+      }
+
+      .rsvp-link:hover .rsvp-button-overlay,
+      .rsvp-link:focus-visible .rsvp-button-overlay {
+        opacity: 1;
+      }
+
+      .rsvp-link:active .rsvp-button-overlay {
+        opacity: 1;
+      }
+
+      .rsvp-link:focus-visible {
+        outline: 2px solid rgba(255, 220, 160, 0.8);
+        outline-offset: -3px;
+      }
+
+      .venue-section {
+        position: relative;
+        line-height: 0;
+      }
+
+      .venue-arrow {
+        position: absolute !important;
+        z-index: 1;
+        top: 34.95%;
+        left: 76.8%;
+        width: clamp(10px, 3.78vw, 29px) !important;
+        height: auto !important;
+        transform: translateY(-50%);
+        pointer-events: none;
+        filter: drop-shadow(0 0 6px rgba(140, 0, 0, 0.35));
+        animation: arrow-nudge-right 0.9s ease-in-out infinite;
+      }
+
       .clickable {
         cursor: pointer;
       }
+
+      /* 地圖視窗 */
       .map-modal {
         display: none;
         position: fixed;
         inset: 0;
         z-index: 9999;
       }
+
       .map-modal.open {
         display: block;
       }
+
       .map-modal-backdrop {
         position: fixed;
         inset: 0;
         background: rgba(0, 0, 0, 0.6);
       }
+
       .map-modal-content {
         position: fixed;
         left: 50%;
@@ -105,43 +420,206 @@
         transform: translate(-50%, -50%);
         width: min(92vw, 900px);
         height: min(80vh, 600px);
-        background: transparent;
         display: flex;
-        align-items: stretch;
         justify-content: center;
         outline: none;
       }
+
       .map-wrapper {
         width: 100%;
         height: 100%;
         border-radius: 12px;
         overflow: hidden;
       }
+
       .map-wrapper iframe {
+        display: block;
         width: 100%;
         height: 100%;
         border: 0;
-        display: block;
       }
+
       .map-close {
         position: absolute;
-        right: calc(50% - (min(92vw, 900px) / 2) + 12px);
-        top: calc(50% - (min(80vh, 600px) / 2) + 12px);
-        background: rgba(0, 0, 0, 0.6);
-        color: #fff;
-        border: none;
-        padding: 6px 8px;
+        right: 12px;
+        top: 12px;
+        padding: 6px 9px;
+        border: 0;
         border-radius: 6px;
+        background: rgba(0, 0, 0, 0.65);
+        color: #fff;
         cursor: pointer;
         z-index: 10001;
+      }
+
+      /* 手機版讓動畫畫布填滿定格視窗，避免露出補色背景 */
+      @media (max-width: 768px) {
+        html {
+          scroll-snap-type: none;
+        }
+
+        .hero {
+          z-index: 1;
+          animation: mobile-first-scene-in 520ms ease-out both;
+        }
+
+        .curtain-story {
+          z-index: 2;
+        }
+
+        .dress-story {
+          z-index: 3;
+        }
+
+        .details-strip {
+          z-index: 4;
+        }
+
+        .curtain-story,
+        .dress-story {
+          height: auto;
+          background: transparent;
+        }
+
+        .curtain-frame,
+        .dress-frame {
+          position: relative;
+          top: auto;
+          height: auto;
+          background: transparent;
+        }
+
+        .curtain-art,
+        .dress-art {
+          position: relative;
+          width: 100%;
+          background: transparent;
+        }
+
+        .curtain-art {
+          aspect-ratio: 1000 / 1415;
+        }
+
+        .dress-art {
+          aspect-ratio: 1000 / 1047;
+        }
+
+        .curtain-art::before,
+        .dress-art::before {
+          content: none;
+        }
+
+        .curtain-story,
+        .dress-story,
+        .details-strip {
+          margin-top: -1px;
+          opacity: var(--scene-opacity, 1);
+          will-change: opacity;
+        }
+
+        .transition-snap.snap-ready {
+          scroll-snap-align: none;
+        }
+      }
+
+      @keyframes mobile-first-scene-in {
+        from {
+          opacity: 0;
+        }
+
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* 使用者選擇減少動畫時直接顯示完成畫面 */
+      @media (prefers-reduced-motion: reduce) {
+        .scroll-arrow,
+        .venue-arrow {
+          animation: none;
+        }
+
+        .rsvp-button-overlay {
+          transition: none;
+        }
+
+        .mobile-scene {
+          opacity: 1 !important;
+          transform: none !important;
+          animation: none !important;
+        }
+
+        .curtain-story {
+          height: auto;
+        }
+
+        .dress-story {
+          height: auto;
+        }
+
+        .curtain-frame {
+          position: relative;
+          height: auto;
+        }
+
+        .dress-frame {
+          position: relative;
+          height: auto;
+        }
+
+        .curtain-art {
+          width: 100%;
+          aspect-ratio: 1000 / 1415;
+        }
+
+        .dress-art {
+          width: 100%;
+          aspect-ratio: 1000 / 1047;
+        }
+
+        .curtain-base,
+        .heart-lights,
+        .curtain-photo,
+        .curtain-copy {
+          display: none;
+        }
+
+        .curtain-final {
+          position: relative !important;
+          opacity: 1 !important;
+        }
+
+        .dress-base,
+        .dress-heart-lights,
+        .coming-layer {
+          display: none;
+        }
+
+        .dress-final {
+          position: relative !important;
+          opacity: 1 !important;
+        }
       }
     </style>
   </head>
 
   <body>
+    <aside class="desktop-notice" aria-label="建議使用手機瀏覽">
+      <div class="desktop-notice-card">
+        <h1>請使用手機開啟</h1>
+        <p>為呈現最佳視覺尺寸，請使用手機掃描 QR Code 瀏覽電子喜帖。</p>
+        <img
+          src="image/invatation_QR.png?v=20260624"
+          alt="電子喜帖 QR Code"
+        />
+      </div>
+    </aside>
+
     <main class="invitation">
-      <div class="hero">
+      <!-- 第一頁 -->
+      <div class="hero mobile-scene scene-hero" data-mobile-scene>
         <img src="image/invatation_1.png" alt="Wedding Invitation Cover" />
+
         <img
           class="scroll-arrow"
           src="image/invatation-08.png"
@@ -149,25 +627,120 @@
         />
       </div>
 
-      <img src="image/invatation_2.png" alt="Wedding Invitation Main" />
+      <!-- 定格滾動動畫 -->
+      <section
+        class="curtain-story mobile-scene scene-curtain"
+        aria-label="Wedding invitation reveal"
+        data-curtain-story
+        data-mobile-scene
+      >
+        <div class="curtain-frame">
+          <div class="curtain-art" data-curtain-art>
+            <!-- 初始紅布 -->
+            <img
+              class="curtain-base"
+              src="image/invatation_2-1.png"
+              alt="紅色布幕"
+            />
 
-      <img src="image/invatation_3.png" alt="Dress Code" />
+            <!-- 愛心燈 -->
+            <img class="heart-lights" src="image/love.png" alt="" />
 
-      <img src="image/invatation_4.png" alt="Schedule" />
+            <!-- 照片 -->
+            <img class="curtain-photo" src="image/photo.png" alt="" />
 
-      <img
-        id="venue-img"
-        class="clickable"
-        src="image/invatation_5.png"
-        alt="Venue"
-      />
+            <!-- 上方與中間文字：透明 PNG，固定在原位淡入 -->
+            <img
+              class="curtain-copy wedding-copy"
+              src="image/wedding text.png"
+              alt=""
+            />
 
-      <a class="rsvp-link" href="rsvp/index.html">
-        <img src="image/invatation_6.png" alt="填寫出席回函" />
-      </a>
-      <!-- Map modal -->
+            <!-- 下方姓名文字：透明 PNG，固定在原位淡入 -->
+            <img
+              class="curtain-copy name-copy"
+              src="image/name text.png"
+              alt=""
+            />
+
+            <!-- 最終完整畫面 -->
+            <img
+              class="curtain-final"
+              src="image/invatation_2.png"
+              alt="George and Vivian wedding invitation"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- 其他頁面 -->
+      <section
+        class="dress-story transition-snap mobile-scene scene-dress"
+        aria-label="Dress code reveal"
+        data-dress-story
+        data-mobile-scene
+      >
+        <div class="dress-frame">
+          <div class="dress-art" data-dress-art>
+            <img
+              class="dress-base"
+              src="image/invatation_3-1.png"
+              alt="Dress code curtain"
+            />
+
+            <img class="dress-heart-lights" src="image/love.png" alt="" />
+
+            <img class="coming-layer" src="image/coming soon.png" alt="" />
+
+            <img
+              class="dress-final"
+              src="image/invatation_3.png"
+              alt="Coming soon dress code"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="details-strip mobile-scene scene-details"
+        data-mobile-scene
+      >
+        <div class="static-section">
+          <img src="image/invatation_4.png" alt="Schedule" decoding="async" />
+        </div>
+
+        <div class="venue-section">
+          <img
+            id="venue-img"
+            class="clickable"
+            src="image/invatation_5-1.png"
+            alt="婚宴地點"
+          />
+
+          <img
+            class="venue-arrow"
+            src="image/arrow-2.png"
+            alt=""
+            aria-hidden="true"
+          />
+        </div>
+
+        <a class="rsvp-link" href="rsvp/index.html">
+          <img src="image/invatation_6.png" alt="填寫出席回函" />
+
+          <img
+            class="rsvp-button-overlay"
+            src="image/button hover.png"
+            alt=""
+            aria-hidden="true"
+          />
+        </a>
+      </section>
+
+      <!-- 地圖視窗 -->
       <div id="map-modal" class="map-modal" aria-hidden="true">
         <div class="map-modal-backdrop" data-close></div>
+
         <div
           class="map-modal-content"
           role="dialog"
@@ -175,83 +748,355 @@
           aria-label="地圖預覽"
         >
           <button class="map-close" aria-label="關閉地圖">✕</button>
-          <div class="map-wrapper" id="map-wrapper">
-            <!-- iframe 會在開啟時建立以節省資源 -->
-          </div>
+
+          <div class="map-wrapper" id="map-wrapper"></div>
         </div>
       </div>
     </main>
+
     <script>
+      /* 定格滾動動畫 */
+      (function () {
+        const story = document.querySelector("[data-curtain-story]");
+        const art = document.querySelector("[data-curtain-art]");
+        const frame = story ? story.querySelector(".curtain-frame") : null;
+
+        const reducedMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        );
+        const mobileLayout = window.matchMedia("(max-width: 768px)");
+
+        if (!story || !art || !frame || reducedMotion.matches) {
+          return;
+        }
+
+        const clamp = (value, min = 0, max = 1) =>
+          Math.min(max, Math.max(min, value));
+
+        const between = (value, start, end) =>
+          clamp((value - start) / (end - start));
+
+        const ease = (value) => value * value * (3 - 2 * value);
+
+        const lightsMaxOpacity = 0.3;
+
+        let ticking = false;
+        let viewportWidth = window.innerWidth;
+
+        function syncStoryHeight() {
+          const artHeight = art.offsetWidth * (1415 / 1000);
+          const frameHeight = Math.max(artHeight, window.innerHeight);
+          story.style.setProperty("--curtain-art-height", `${artHeight}px`);
+          story.style.setProperty("--curtain-frame-height", `${frameHeight}px`);
+        }
+
+        function renderStory() {
+          const rect = story.getBoundingClientRect();
+
+          const scrollDistance = Math.max(
+            1,
+            story.offsetHeight - frame.offsetHeight,
+          );
+
+          const progress = mobileLayout.matches
+            ? clamp(
+                (window.innerHeight * 0.78 - rect.top) /
+                  (window.innerHeight * 0.78 + story.offsetHeight * 0.65),
+              )
+            : clamp(-rect.top / scrollDistance);
+
+          /* 各動畫階段 */
+          const lights = ease(between(progress, 0.08, 0.23));
+
+          const photo = ease(between(progress, 0.25, 0.43));
+
+          const weddingCopy = ease(between(progress, 0.43, 0.62));
+
+          const nameCopy = ease(between(progress, 0.6, 0.78));
+
+          /* 愛心燈 */
+          art.style.setProperty(
+            "--lights-opacity",
+            (lights * lightsMaxOpacity).toFixed(3),
+          );
+
+          /* 照片 */
+          art.style.setProperty("--photo-opacity", photo.toFixed(3));
+
+          art.style.setProperty(
+            "--photo-scale",
+            (1.06 - photo * 0.06).toFixed(3),
+          );
+
+          /* 透明文字圖片只在原位置淡入，不移動 */
+          art.style.setProperty(
+            "--wedding-copy-opacity",
+            weddingCopy.toFixed(3),
+          );
+
+          art.style.setProperty("--name-copy-opacity", nameCopy.toFixed(3));
+
+          ticking = false;
+        }
+
+        function requestRender() {
+          if (ticking) {
+            return;
+          }
+
+          ticking = true;
+          window.requestAnimationFrame(renderStory);
+        }
+
+        window.addEventListener("scroll", requestRender, { passive: true });
+
+        window.addEventListener("resize", function () {
+          const nextWidth = window.innerWidth;
+          const isMobile = nextWidth <= 768;
+
+          if (isMobile && Math.abs(nextWidth - viewportWidth) < 2) {
+            return;
+          }
+
+          viewportWidth = nextWidth;
+          syncStoryHeight();
+          requestRender();
+        });
+
+        syncStoryHeight();
+        renderStory();
+      })();
+
+      /* 第三段 Dress code 定格淡入動畫 */
+      (function () {
+        const dressStory = document.querySelector("[data-dress-story]");
+        const dressArt = document.querySelector("[data-dress-art]");
+        const dressFrame = dressStory
+          ? dressStory.querySelector(".dress-frame")
+          : null;
+
+        const reducedMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        );
+        const mobileLayout = window.matchMedia("(max-width: 768px)");
+
+        if (!dressStory || !dressArt || !dressFrame || reducedMotion.matches) {
+          return;
+        }
+
+        const clamp = (value, min = 0, max = 1) =>
+          Math.min(max, Math.max(min, value));
+
+        const between = (value, start, end) =>
+          clamp((value - start) / (end - start));
+
+        const ease = (value) => value * value * (3 - 2 * value);
+        const lightsMaxOpacity = 0.3;
+        let ticking = false;
+        let viewportWidth = window.innerWidth;
+
+        function syncDressHeight() {
+          const artHeight = dressArt.offsetWidth * (1047 / 1000);
+          const frameHeight = Math.max(artHeight, window.innerHeight);
+          dressStory.style.setProperty("--dress-art-height", `${artHeight}px`);
+          dressStory.style.setProperty(
+            "--dress-frame-height",
+            `${frameHeight}px`,
+          );
+        }
+
+        function renderDressStory() {
+          const rect = dressStory.getBoundingClientRect();
+
+          const scrollDistance = Math.max(
+            1,
+            dressStory.offsetHeight - dressFrame.offsetHeight,
+          );
+
+          const progress = mobileLayout.matches
+            ? clamp(
+                (window.innerHeight * 0.78 - rect.top) /
+                  (window.innerHeight * 0.78 + dressStory.offsetHeight * 0.65),
+              )
+            : clamp(-rect.top / scrollDistance);
+          /* 換算兩段捲動長度，讓愛心燈的實際淡入速度與前一幕一致。 */
+          const lights = ease(between(progress, 0.151, 0.433));
+          const coming = ease(between(progress, 0.45, 0.789));
+
+          dressArt.style.setProperty(
+            "--dress-lights-opacity",
+            (lights * lightsMaxOpacity).toFixed(3),
+          );
+
+          dressArt.style.setProperty("--coming-opacity", coming.toFixed(3));
+
+          ticking = false;
+        }
+
+        function requestDressRender() {
+          if (ticking) {
+            return;
+          }
+
+          ticking = true;
+          window.requestAnimationFrame(renderDressStory);
+        }
+
+        window.addEventListener("scroll", requestDressRender, {
+          passive: true,
+        });
+
+        window.addEventListener("resize", function () {
+          const nextWidth = window.innerWidth;
+          const isMobile = nextWidth <= 768;
+
+          if (isMobile && Math.abs(nextWidth - viewportWidth) < 2) {
+            return;
+          }
+
+          viewportWidth = nextWidth;
+          syncDressHeight();
+          requestDressRender();
+        });
+
+        syncDressHeight();
+        renderDressStory();
+      })();
+
+      /* 只在前一段幾乎滑完後，啟用下一段的快速吸附 */
+      (function () {
+        const scenes = Array.from(
+          document.querySelectorAll("[data-mobile-scene]"),
+        );
+        const mobileLayout = window.matchMedia("(max-width: 768px)");
+        const reducedMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        );
+        let ticking = false;
+
+        if (!scenes.length) {
+          return;
+        }
+
+        const clamp = (value, min = 0, max = 1) =>
+          Math.min(max, Math.max(min, value));
+        const ease = (value) => value * value * (3 - 2 * value);
+
+        function renderSceneFades() {
+          if (!mobileLayout.matches || reducedMotion.matches) {
+            scenes.forEach(function (scene) {
+              scene.style.removeProperty("--scene-opacity");
+            });
+            ticking = false;
+            return;
+          }
+
+          const viewportHeight = window.innerHeight;
+          const fadeDistance = Math.max(160, viewportHeight * 0.28);
+
+          scenes.forEach(function (scene, index) {
+            if (index === 0) {
+              return;
+            }
+
+            const top = scene.getBoundingClientRect().top;
+            const progress = ease(clamp((viewportHeight - top) / fadeDistance));
+            const opacity = 0.22 + progress * 0.78;
+
+            scene.style.setProperty("--scene-opacity", opacity.toFixed(3));
+          });
+
+          ticking = false;
+        }
+
+        function requestSceneFades() {
+          if (ticking) {
+            return;
+          }
+
+          ticking = true;
+          window.requestAnimationFrame(renderSceneFades);
+        }
+
+        window.addEventListener("scroll", requestSceneFades, {
+          passive: true,
+        });
+        window.addEventListener("resize", requestSceneFades);
+        renderSceneFades();
+      })();
+
+      (function () {
+        const targets = document.querySelectorAll(".transition-snap");
+        let ticking = false;
+
+        if (!targets.length) {
+          return;
+        }
+
+        function updateSnapPoints() {
+          const activationDistance = window.innerHeight * 0.45;
+
+          targets.forEach(function (target) {
+            const top = target.getBoundingClientRect().top;
+            const ready = top > 0 && top <= activationDistance;
+            target.classList.toggle("snap-ready", ready);
+          });
+
+          ticking = false;
+        }
+
+        function requestSnapUpdate() {
+          if (ticking) {
+            return;
+          }
+
+          ticking = true;
+          window.requestAnimationFrame(updateSnapPoints);
+        }
+
+        window.addEventListener("scroll", requestSnapUpdate, {
+          passive: true,
+        });
+        window.addEventListener("resize", requestSnapUpdate);
+        updateSnapPoints();
+      })();
+
+      /* 婚宴地點連結 */
       (function () {
         const venue = document.getElementById("venue-img");
-        const modal = document.getElementById("map-modal");
-        const wrapper = document.getElementById("map-wrapper");
-        const closeBtn = modal ? modal.querySelector(".map-close") : null;
-        const backdrop = modal ? modal.querySelector("[data-close]") : null;
-        const embedSrc =
-          "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d29122.581635626124!2d120.67236692875763!3d24.160412817113123!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346917c15c7763e9%3A0xa1cc7f52b77c3f88!2z5paw5aSp5Zyw5bSH5b635peX6Imm5bqX!5e0!3m2!1szh-TW!2stw!4v1782063568869!5m2!1szh-TW!2stw";
+
         const mapsLink = "https://maps.app.goo.gl/KCoXPZVDFskyLLw3A";
 
-        function openModal() {
-          if (!modal) return;
-          if (!wrapper.querySelector("iframe")) {
-            const ifr = document.createElement("iframe");
-            ifr.src = embedSrc;
-            ifr.loading = "lazy";
-            ifr.setAttribute("referrerpolicy", "no-referrer-when-downgrade");
-            wrapper.appendChild(ifr);
+        if (!venue) {
+          return;
+        }
+
+        venue.setAttribute("tabindex", "0");
+        venue.setAttribute("role", "button");
+
+        function openMap() {
+          const link = document.createElement("a");
+
+          link.href = mapsLink;
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+          link.style.display = "none";
+
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+        }
+
+        venue.addEventListener("click", function (event) {
+          event.preventDefault();
+          openMap();
+        });
+
+        venue.addEventListener("keydown", function (event) {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            openMap();
           }
-          modal.classList.add("open");
-          modal.setAttribute("aria-hidden", "false");
-          document.body.style.overflow = "hidden";
-        }
-
-        function closeModal() {
-          if (!modal) return;
-          modal.classList.remove("open");
-          modal.setAttribute("aria-hidden", "true");
-          document.body.style.overflow = "";
-        }
-
-        function openInNewTabWithEmbed() {
-          // Create a temporary link with target=_blank to reliably open a new tab without navigating current page
-          try {
-            const a = document.createElement("a");
-            a.href = mapsLink;
-            a.target = "_blank";
-            a.rel = "noopener noreferrer";
-            a.style.display = "none";
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
-          } catch (e) {
-            // fallback: navigate current tab
-            window.location.href = mapsLink;
-          }
-        }
-
-        if (venue) {
-          // make focusable for keyboard
-          if (!venue.hasAttribute("tabindex"))
-            venue.setAttribute("tabindex", "0");
-          console.log("venue element found, attaching click handler");
-          venue.addEventListener("click", function (e) {
-            e.preventDefault();
-            console.log("venue clicked");
-            openInNewTabWithEmbed();
-          });
-          venue.addEventListener("keydown", function (e) {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault();
-              openInNewTabWithEmbed();
-            }
-          });
-        }
-
-        if (closeBtn) closeBtn.addEventListener("click", closeModal);
-        if (backdrop) backdrop.addEventListener("click", closeModal);
-        document.addEventListener("keydown", function (e) {
-          if (e.key === "Escape") closeModal();
         });
       })();
     </script>
