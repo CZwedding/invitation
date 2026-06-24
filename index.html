@@ -341,36 +341,37 @@
       }
 
       /* RSVP */
+      .rsvp-section {
+        position: relative;
+        line-height: 0;
+      }
+
       .rsvp-link {
         display: block;
-        position: relative;
+        position: absolute;
+        top: 17.4%;
+        left: 24.15%;
+        width: 51.7%;
+        border-radius: 999px;
         cursor: pointer;
       }
 
       .rsvp-button-overlay {
-        position: absolute;
-        top: 17.4%;
-        left: 24.15%;
-        width: 51.7% !important;
+        width: 100% !important;
         height: auto !important;
-        pointer-events: none;
         opacity: 0;
         transition: opacity 180ms ease;
         will-change: opacity;
       }
 
-      .rsvp-link:hover .rsvp-button-overlay,
-      .rsvp-link:focus-visible .rsvp-button-overlay {
-        opacity: 1;
-      }
-
-      .rsvp-link:active .rsvp-button-overlay {
+      .rsvp-link:active .rsvp-button-overlay,
+      .rsvp-link.is-clicked .rsvp-button-overlay {
         opacity: 1;
       }
 
       .rsvp-link:focus-visible {
         outline: 2px solid rgba(255, 220, 160, 0.8);
-        outline-offset: -3px;
+        outline-offset: 3px;
       }
 
       .venue-section {
@@ -725,16 +726,22 @@
           />
         </div>
 
-        <a class="rsvp-link" href="rsvp/index.html">
+        <div class="rsvp-section">
           <img src="image/invatation_6.png" alt="填寫出席回函" />
 
-          <img
-            class="rsvp-button-overlay"
-            src="image/button hover.png"
-            alt=""
-            aria-hidden="true"
-          />
-        </a>
+          <a
+            class="rsvp-link"
+            href="rsvp/index.html"
+            aria-label="填寫出席回函"
+          >
+            <img
+              class="rsvp-button-overlay"
+              src="image/button hover.png"
+              alt=""
+              aria-hidden="true"
+            />
+          </a>
+        </div>
       </section>
 
       <!-- 地圖視窗 -->
@@ -1023,6 +1030,27 @@
         });
         window.addEventListener("resize", requestSceneFades);
         renderSceneFades();
+      })();
+
+      (function () {
+        const rsvpLink = document.querySelector(".rsvp-link");
+
+        if (!rsvpLink) {
+          return;
+        }
+
+        rsvpLink.addEventListener("click", function (event) {
+          event.preventDefault();
+          rsvpLink.classList.add("is-clicked");
+
+          window.setTimeout(function () {
+            window.location.href = rsvpLink.href;
+          }, 220);
+        });
+
+        window.addEventListener("pageshow", function () {
+          rsvpLink.classList.remove("is-clicked");
+        });
       })();
 
       (function () {

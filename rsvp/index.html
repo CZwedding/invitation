@@ -423,135 +423,119 @@
         display: block;
         width: 220px;
         max-width: 66%;
-        height: 56px;
-        min-height: 56px;
+        height: 40px;
+        min-height: 40px;
         margin: -0.82rem auto 0;
         padding: 0 1.24rem;
         border-radius: 999px;
         overflow: hidden;
         isolation: isolate;
 
-        color: var(--button-text);
+        color: #5a1111;
+        font-size: 1rem;
         font-weight: 600;
         letter-spacing: 0.18em;
 
-        border: 1px solid rgba(255, 219, 150, 0.74);
+        border: 1px solid rgba(214, 178, 105, 0.46);
 
-        background:
-          radial-gradient(
-            circle at 50% 10%,
-            rgba(255, 225, 165, 0.36) 0%,
-            rgba(210, 145, 78, 0.18) 30%,
-            rgba(125, 36, 32, 0.34) 65%,
-            rgba(70, 0, 0, 0.38) 100%
-          ),
-          linear-gradient(
-            180deg,
-            rgba(255, 235, 190, 0.12) 0%,
-            rgba(130, 28, 28, 0.32) 56%,
-            rgba(60, 0, 0, 0.34) 100%
-          );
+        background: linear-gradient(
+          180deg,
+          rgba(255, 253, 247, 0.78) 0%,
+          rgba(255, 248, 236, 0.66) 100%
+        );
 
-        backdrop-filter: blur(14px) saturate(165%) contrast(1.1)
-          brightness(1.08);
-        -webkit-backdrop-filter: blur(14px) saturate(165%) contrast(1.1)
-          brightness(1.08);
+        backdrop-filter: blur(12px) saturate(125%) brightness(1.04);
+        -webkit-backdrop-filter: blur(12px) saturate(125%) brightness(1.04);
 
-        box-shadow:
-          inset 0 1px 0 rgba(255, 238, 205, 0.28),
-          inset 0 -1px 0 rgba(85, 22, 14, 0.42),
-          inset 0 0 20px rgba(232, 190, 115, 0.11),
-          0 8px 20px rgba(35, 0, 0, 0.28),
-          0 0 20px rgba(232, 190, 115, 0.09);
+        box-shadow: 0 3px 9px rgba(35, 0, 0, 0.1);
 
-        text-shadow:
-          0 1px 8px rgba(35, 0, 0, 0.52),
-          0 0 8px rgba(255, 232, 190, 0.13);
+        text-shadow: 0 1px 0 rgba(255, 255, 255, 0.46);
 
         transition:
-          transform 0.25s ease,
-          box-shadow 0.25s ease,
-          background 0.25s ease,
-          border-color 0.25s ease,
-          filter 0.25s ease,
+          transform 0.16s ease,
+          box-shadow 0.16s ease,
+          background 0.16s ease,
+          border-color 0.16s ease,
           opacity 0.25s ease;
       }
 
       .submit-btn::before {
-        content: "";
-        position: absolute;
-        inset: 1px;
-        z-index: -1;
-        border-radius: inherit;
-        pointer-events: none;
-
-        background: linear-gradient(
-          180deg,
-          rgba(255, 230, 178, 0.13) 0%,
-          rgba(232, 190, 115, 0.055) 30%,
-          rgba(255, 255, 255, 0.012) 64%,
-          rgba(232, 190, 115, 0.045) 100%
-        );
-
-        box-shadow:
-          inset 0 0 0 1px rgba(255, 225, 170, 0.09),
-          inset 0 8px 13px rgba(232, 190, 115, 0.026);
+        display: none;
       }
 
       .submit-btn::after {
+        display: none;
+      }
+
+      .submit-btn:active,
+      .submit-btn.is-pressed {
+        transform: translateY(1px);
+        border-color: rgba(190, 145, 74, 0.52);
+        background: rgba(255, 246, 232, 0.66);
+        box-shadow:
+          inset 0 2px 4px rgba(90, 17, 17, 0.1),
+          0 1px 4px rgba(35, 0, 0, 0.08);
+      }
+
+      .back-invite-footer {
+        width: min(78%, 18rem);
+        margin: 2rem auto 0;
+        text-align: center;
+      }
+
+      .back-invite-link {
+        position: relative;
+        display: block;
+        padding: 0.72rem 0.8rem 0.76rem;
+        color: rgba(238, 215, 167, 0.82);
+        font-size: 0.84rem;
+        font-weight: 400;
+        line-height: 1.5;
+        letter-spacing: 0.18em;
+        text-decoration: none;
+        text-shadow: 0 1px 8px rgba(20, 0, 0, 0.28);
+        transition:
+          color 0.22s ease,
+          text-shadow 0.22s ease;
+      }
+
+      .back-invite-link::before,
+      .back-invite-link::after {
         content: "";
         position: absolute;
-        left: 13%;
-        right: 13%;
-        top: 7px;
-        height: 25%;
-        z-index: -1;
-        border-radius: 999px;
+        left: 0;
+        right: 0;
+        height: 1px;
         pointer-events: none;
-
         background: linear-gradient(
-          180deg,
-          rgba(255, 225, 165, 0.22),
-          rgba(255, 225, 165, 0)
+          90deg,
+          transparent 0%,
+          rgba(232, 202, 140, 0.28) 10%,
+          rgba(244, 225, 184, 0.68) 50%,
+          rgba(232, 202, 140, 0.28) 90%,
+          transparent 100%
         );
-
-        opacity: 0.3;
-        filter: blur(1.2px);
       }
 
-      .submit-btn:hover {
-        transform: translateY(-1px);
-        border-color: rgba(255, 228, 170, 0.82);
-
-        background:
-          radial-gradient(
-            circle at 50% 10%,
-            rgba(255, 231, 176, 0.42) 0%,
-            rgba(214, 150, 82, 0.22) 31%,
-            rgba(130, 38, 33, 0.34) 65%,
-            rgba(68, 0, 0, 0.36) 100%
-          ),
-          linear-gradient(
-            180deg,
-            rgba(255, 240, 205, 0.15) 0%,
-            rgba(135, 31, 29, 0.34) 56%,
-            rgba(60, 0, 0, 0.32) 100%
-          );
-
-        box-shadow:
-          inset 0 1px 0 rgba(255, 238, 205, 0.34),
-          inset 0 -1px 0 rgba(85, 22, 14, 0.38),
-          inset 0 0 24px rgba(232, 190, 115, 0.14),
-          0 8px 22px rgba(35, 0, 0, 0.28),
-          0 0 26px rgba(232, 190, 115, 0.14);
+      .back-invite-link::before {
+        top: 0;
       }
 
-      .submit-btn:active {
-        transform: translateY(1px);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 238, 205, 0.2),
-          inset 0 0 14px rgba(232, 190, 115, 0.09),
-          0 5px 14px rgba(35, 0, 0, 0.22);
+      .back-invite-link::after {
+        bottom: 0;
+      }
+
+      .back-invite-link:hover,
+      .back-invite-link:focus-visible {
+        color: rgba(255, 239, 204, 0.96);
+        text-shadow:
+          0 1px 8px rgba(20, 0, 0, 0.3),
+          0 0 10px rgba(232, 202, 140, 0.12);
+      }
+
+      .back-invite-link:focus-visible {
+        outline: 1px solid rgba(232, 202, 140, 0.42);
+        outline-offset: 5px;
       }
 
       .hidden-section {
@@ -628,8 +612,8 @@
         }
 
         .rsvp-card {
-          width: 100%;
-          padding: 1.92rem 1.32rem 1.78rem;
+          width: 95%;
+          padding: 1.92rem 2.5rem 1.78rem;
           border-radius: 1.68rem;
 
           backdrop-filter: blur(20px) saturate(160%) contrast(1.12)
@@ -654,11 +638,11 @@
         .submit-btn {
           width: 220px;
           max-width: 72%;
-          height: 55px;
-          min-height: 55px;
+          height: 40px;
+          min-height: 40px;
           margin-top: -0.66rem;
           padding: 0 1.05rem;
-          font-size: 0.9rem;
+          font-size: 1rem;
           letter-spacing: 0.17em;
         }
       }
@@ -763,10 +747,7 @@
       <div class="desktop-notice-card">
         <h1>請使用手機開啟</h1>
         <p>為呈現最佳填寫尺寸，請使用手機掃描 QR Code 開啟出席回函。</p>
-        <img
-          src="../image/rsvp_QR.png?v=20260624"
-          alt="出席回函 QR Code"
-        />
+        <img src="../image/rsvp_QR.png?v=20260624" alt="出席回函 QR Code" />
       </div>
     </aside>
 
@@ -1013,23 +994,16 @@
                 期待與您分享喜悅！
               </p>
 
-              <p>
-                <a
-                  href="../"
-                  class="submit-btn"
-                  style="
-                    display: inline-block;
-                    width: auto;
-                    padding: 0.6rem 1.2rem;
-                    margin-top: 0;
-                  "
-                >
-                  回到電子喜帖
-                </a>
-              </p>
+              <div class="back-invite-footer">
+                <a href="../" class="back-invite-link">返回電子喜帖</a>
+              </div>
             </div>
           </form>
         </div>
+      </div>
+
+      <div class="back-invite-footer">
+        <a href="../" class="back-invite-link">返回電子喜帖</a>
       </div>
     </main>
 
@@ -1136,6 +1110,18 @@
       }
 
       window.addEventListener("DOMContentLoaded", () => {
+        const submitBtn = document.getElementById("submitBtn");
+
+        if (submitBtn) {
+          submitBtn.addEventListener("click", () => {
+            submitBtn.classList.add("is-pressed");
+
+            window.setTimeout(() => {
+              submitBtn.classList.remove("is-pressed");
+            }, 180);
+          });
+        }
+
         setSectionEnabled("attendBox", false);
         setSectionEnabled("absentBox", false);
         handleLogic();
