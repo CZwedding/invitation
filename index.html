@@ -237,9 +237,10 @@
 
       .name-copy {
         z-index: 4 !important;
-        inset: 66.8551% auto auto 7.6% !important;
-        width: 86.7% !important;
+        inset: 63% auto auto 50% !important;
+        width: 92.4% !important;
         height: auto !important;
+        transform: translateX(-50%);
         opacity: var(--name-copy-opacity, 0);
       }
 
@@ -307,9 +308,10 @@
 
       .coming-layer {
         z-index: 3;
-        inset: 36.0076% auto auto 22.4% !important;
-        width: 55.2% !important;
+        inset: 29% auto auto 50% !important;
+        width: 71.1% !important;
         height: auto !important;
+        transform: translateX(-50%);
         opacity: var(--coming-opacity, 0);
         will-change: opacity;
       }
@@ -349,21 +351,30 @@
       .rsvp-link {
         display: block;
         position: absolute;
-        top: 17.4%;
-        left: 24.15%;
+        top: 40.6%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         width: 51.7%;
         border-radius: 999px;
         cursor: pointer;
+        line-height: 0;
+      }
+
+      .rsvp-button {
+        display: block;
+        width: 100% !important;
+        height: auto !important;
       }
 
       .rsvp-button-overlay {
-        width: 100% !important;
-        height: auto !important;
+        position: absolute;
+        inset: 0;
         opacity: 0;
         transition: opacity 180ms ease;
         will-change: opacity;
       }
 
+      .rsvp-link:hover .rsvp-button-overlay,
       .rsvp-link:active .rsvp-button-overlay,
       .rsvp-link.is-clicked .rsvp-button-overlay {
         opacity: 1;
@@ -609,10 +620,7 @@
       <div class="desktop-notice-card">
         <h1>請使用手機開啟</h1>
         <p>為呈現最佳視覺尺寸，請使用手機掃描 QR Code 瀏覽電子喜帖。</p>
-        <img
-          src="image/invatation_QR.png?v=20260624"
-          alt="電子喜帖 QR Code"
-        />
+        <img src="image/invatation_QR.png?v=20260624" alt="電子喜帖 QR Code" />
       </div>
     </aside>
 
@@ -714,7 +722,7 @@
           <img
             id="venue-img"
             class="clickable"
-            src="image/invatation_5-1.png"
+            src="image/invatation_5.png"
             alt="婚宴地點"
           />
 
@@ -727,15 +735,17 @@
         </div>
 
         <div class="rsvp-section">
-          <img src="image/invatation_6.png" alt="填寫出席回函" />
+          <img src="image/invatation_6-1.png" alt="" aria-hidden="true" />
 
-          <a
-            class="rsvp-link"
-            href="rsvp/index.html"
-            aria-label="填寫出席回函"
-          >
+          <a class="rsvp-link" href="rsvp/index.html" aria-label="填寫出席回函">
             <img
-              class="rsvp-button-overlay"
+              class="rsvp-button"
+              src="image/button.png"
+              alt=""
+              aria-hidden="true"
+            />
+            <img
+              class="rsvp-button rsvp-button-overlay"
               src="image/button hover.png"
               alt=""
               aria-hidden="true"
